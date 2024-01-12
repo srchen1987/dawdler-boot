@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>dawdler-boot</groupId>
+		<artifactId>dawdler-boot</artifactId>
+		<version>0.17.1-jdk17-RELEASES</version>
+	</parent>
+	<artifactId>dawdler-boot-web-undertow-jsp</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>dawdler-boot</groupId>
+			<artifactId>dawdler-boot-web-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.undertow.jastow</groupId>
+			<artifactId>jastow</artifactId>
+			<version>2.2.7.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet.jsp</groupId>
+			<artifactId>jakarta.servlet.jsp-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jdt</groupId>
+			<artifactId>ecj</artifactId>
+			<version>3.32.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,7 @@
+com.anywide.dawdler.boot.web.undertow.deployment.BaseConfigDeployer
+com.anywide.dawdler.boot.web.undertow.deployment.StaticResourceDeployer
+com.anywide.dawdler.boot.web.undertow.deployment.ErrorPagesDeployer
+com.anywide.dawdler.boot.web.undertow.deployment.ServletDeployer
+com.anywide.dawdler.boot.web.undertow.deployment.FilterDeployer
+com.anywide.dawdler.boot.web.undertow.deployment.ListenerDeployer
+com.anywide.dawdler.boot.web.undertow.deployment.WebSocketDeployer
