@@ -72,7 +72,7 @@ public class UserWebApplication {
 
 ```shell
 
---add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.web --add-opens=java.base/jdk.internal.loader=dawdler.boot.web --add-opens=java.base/jdk.internal.perf=dawdler.client --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.util --add-opens=java.base/jdk.internal.loader=dawdler.client.plug.web --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=dawdler.core --add-opens=java.base/java.nio=dawdler.core --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=kryo --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/java.lang=cglib --add-opens=java.base/java.lang=org.aspectj.weaver
+--add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.web --add-opens=java.base/jdk.internal.loader=dawdler.boot.web --add-opens=java.base/jdk.internal.perf=dawdler.client --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.util --add-opens=java.base/jdk.internal.loader=dawdler.client.plug.web --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=dawdler.core --add-opens=java.base/java.nio=dawdler.core --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=kryo --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/java.lang=cglib
 
 ```
 
@@ -80,6 +80,14 @@ public class UserWebApplication {
 
 ```sh
 
-java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.web --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader --add-opens=java.base/jdk.internal.loader=dawdler.boot.web --add-opens=java.base/jdk.internal.perf=dawdler.client  --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.util --add-opens=java.base/jdk.internal.loader=dawdler.client.plug.web --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=dawdler.core --add-opens=java.base/java.nio=dawdler.core --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang=org.aspectj.weaver  -p xxx-all.jar -m dawdler.boot.classloader
+java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader  -p xxx-all.jar -m dawdler.boot.classloader
+
+```
+
+或
+
+```sh
+
+java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED -jar xxx-all.jar
 
 ```

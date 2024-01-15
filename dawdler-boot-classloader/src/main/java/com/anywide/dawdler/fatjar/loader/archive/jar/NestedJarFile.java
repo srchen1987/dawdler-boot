@@ -295,17 +295,8 @@ public class NestedJarFile extends JarFile {
 	}
 
 	private void ensureOpen() {
-
 		if (this.closed) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Printing stack trace:\n");
-			StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-			for (int i = 1; i < elements.length; i++) {
-				StackTraceElement s = elements[i];
-				sb.append("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":"
-						+ s.getLineNumber() + ")\n");
-			}
-			throw new IllegalStateException(sb.toString() + "zip file closed");
+			throw new IllegalStateException("zip file closed!");
 		}
 	}
 

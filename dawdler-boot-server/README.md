@@ -59,6 +59,15 @@ public class UserServiceApplication {
 ### 5. 通过dawdler-boot-maven-plugin打包运行方式(JPMS jdk17+以上需要)
 
 ```shell
-java --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/java.lang=org.aspectj.weaver-p xxx-all.jar -m dawdler.boot.classloader
+
+java --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -p xxx-all.jar -m dawdler.boot.classloader
+
+```
+
+或
+
+```sh
+
+java --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -jar xxx-all.jar
 
 ```
