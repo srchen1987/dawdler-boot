@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>dawdler-boot</groupId>
+		<artifactId>dawdler-boot</artifactId>
+		<version>0.0.2-RELEASES</version>
+	</parent>
+	<artifactId>dawdler-boot-server</artifactId>
+	<name>dawdler-boot-server</name>
+	<dependencies>
+		<dependency>
+			<groupId>dawdler</groupId>
+			<artifactId>dawdler-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dawdler-boot</groupId>
+			<artifactId>dawdler-boot-classloader</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
