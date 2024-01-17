@@ -68,7 +68,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 				if (i != -1) {
 					String pkgname = name.substring(0, i);
 					Manifest man = res.getManifest();
-					definePackageInternal(pkgname, man, url);
+					definePackageInner(pkgname, man, url);
 				}
 				java.nio.ByteBuffer codeByteBuffer = res.getByteBuffer();
 				CodeSigner[] signers = res.getCodeSigners();
