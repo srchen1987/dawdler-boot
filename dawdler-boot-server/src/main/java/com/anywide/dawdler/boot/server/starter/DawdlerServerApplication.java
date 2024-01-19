@@ -58,7 +58,7 @@ public class DawdlerServerApplication {
 
 		Optional<Object> optionalClassPath = Optional.ofNullable(System.getProperties().get("java.class.path"));
 		optionalClassPath.ifPresent(paths -> {
-			for (String path : paths.toString().split(":")) {
+			for (String path : paths.toString().split(File.pathSeparator)) {
 				try {
 					urls.add(new File(path).toURI().toURL());
 				} catch (MalformedURLException e) {
@@ -68,7 +68,7 @@ public class DawdlerServerApplication {
 
 		Optional<Object> optionalModulePath = Optional.ofNullable(System.getProperties().get("jdk.module.path"));
 		optionalModulePath.ifPresent(paths -> {
-			for (String path : paths.toString().split(":")) {
+			for (String path : paths.toString().split(File.pathSeparator)) {
 				try {
 					urls.add(new File(path).toURI().toURL());
 				} catch (MalformedURLException e) {
