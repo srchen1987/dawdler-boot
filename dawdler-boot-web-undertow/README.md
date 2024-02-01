@@ -28,6 +28,7 @@ undertow:
  #worker-threads: #工作线程数,默认值是I/O线程数的8倍.
  #buffer-size: #每个缓冲区的大小,默认值源自JVM可用的最大内存量.单位为byte.
  #direct-buffers: #是否开启堆外内存缓冲区, 默认值当jvm大小超过64M时则开启.
+ #virtual-thread: #是否开启虚拟线程 默认未开启
  #undertow-options: #undertow下的配置,一般不需要配置,如需自定义配置请具体参考UndertowOptions.java
   #max_headers: 200 #最大header请求个数 
  #socket-options: #socket配置项 一般不需要配置采用默认即可,如需自定义配置请具体参考org.xnio.Options.java

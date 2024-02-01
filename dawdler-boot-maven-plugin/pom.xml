@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>dawdler-boot</groupId>
 		<artifactId>dawdler-boot</artifactId>
-		<version>0.17.1-jdk17-RELEASES</version>
+		<version>0.21.1-jdk21-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot-maven-plugin</artifactId>
 	<name>dawdler-boot-maven-plugin</name>
@@ -67,6 +67,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${maven-plugin-plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -77,8 +78,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
 						<release>${maven.compiler.target}</release>
-						<source>17</source>
-						<target>17</target>
+						<source>21</source>
+						<target>21</target>
 						<encoding>UTF-8</encoding>
 						<verbose>true</verbose>
 						<fork>true</fork>
