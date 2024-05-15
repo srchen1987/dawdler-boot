@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.anywide.dawdler.boot.server.deploys.loader.DawdlerMainClassLoader;
+import com.anywide.dawdler.boot.core.loader.DawdlerMainClassLoader;
 import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 
 /**

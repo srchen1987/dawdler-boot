@@ -18,7 +18,6 @@ package com.anywide.dawdler.boot.web.undertow.deployment;
 
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.anywide.dawdler.boot.web.undertow.config.UndertowConfig;

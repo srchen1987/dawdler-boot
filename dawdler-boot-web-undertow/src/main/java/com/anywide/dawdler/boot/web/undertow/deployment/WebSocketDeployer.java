@@ -36,11 +36,12 @@ public class WebSocketDeployer implements UndertowDeployer {
 		boolean useWebsocket = !getScanServletComponent().getEndPointList().isEmpty();
 		if (useWebsocket) {
 			WebSocketDeploymentInfo info = new WebSocketDeploymentInfo();
-			getScanServletComponent().getEndPointList().forEach(endPoint->{
+			getScanServletComponent().getEndPointList().forEach(endPoint -> {
 				info.addEndpoint(endPoint);
 			});
 			deploymentInfo.addServletContextAttribute(WebSocketDeploymentInfo.ATTRIBUTE_NAME, info);
 		}
+
 	}
 
 }

@@ -36,7 +36,6 @@ import java.util.UUID;
 import java.util.jar.JarEntry;
 import java.util.jar.Manifest;
 
-import com.anywide.dawdler.fatjar.loader.archive.Archive.EntryFilter;
 import com.anywide.dawdler.fatjar.loader.archive.jar.NestedJarEntry;
 import com.anywide.dawdler.fatjar.loader.archive.jar.NestedJarFile;
 

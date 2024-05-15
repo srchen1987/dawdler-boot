@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>dawdler-boot</groupId>
 		<artifactId>dawdler-boot</artifactId>
-		<version>0.0.2-RELEASES</version>
+		<version>1.8.2-jdk1.8-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot-classloader</artifactId>
 	<name>dawdler-boot-classloader</name>
-		<build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -19,11 +19,12 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.anywide.dawdler.fatjar.loader.launcher.JarLauncher</mainClass>
+							<mainClass>
+								com.anywide.dawdler.fatjar.loader.launcher.JarLauncher</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
 			</plugin>
-			</plugins>
-		</build>
+		</plugins>
+	</build>
 </project>

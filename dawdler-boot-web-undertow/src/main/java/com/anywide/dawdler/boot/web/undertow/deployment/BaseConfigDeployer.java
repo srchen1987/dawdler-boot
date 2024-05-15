@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import com.anywide.dawdler.boot.web.undertow.config.UndertowConfig;
-import com.anywide.dawdler.util.DawdlerTool;
 
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.ServletStackTraces;
@@ -40,7 +39,6 @@ public class BaseConfigDeployer implements UndertowDeployer {
 	public void deploy(UndertowConfig undertowConfig, DeploymentInfo deploymentInfo) throws IOException {
 		String contextPath = undertowConfig.getContextPath();
 		String deployName = undertowConfig.getDeployName();
-		deploymentInfo.setClassLoader(DawdlerTool.getStartClass().getClassLoader());
 		deploymentInfo.setContextPath(contextPath == null ? "" : contextPath);
 		deploymentInfo.setDisplayName(deployName == null ? "" : deployName);
 		deploymentInfo.setDeploymentName("dawdler-boot-web");

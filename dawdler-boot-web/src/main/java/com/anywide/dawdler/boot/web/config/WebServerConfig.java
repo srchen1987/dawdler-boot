@@ -16,11 +16,11 @@
  */
 package com.anywide.dawdler.boot.web.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author jackson.song
@@ -169,6 +169,8 @@ public abstract class WebServerConfig {
 
 		@JsonProperty("mime-types")
 		private Set<String> mimeTypes = new HashSet<>();
+		@JsonProperty("min-response-size")
+		private long minResponseSize = 1024 * 64;
 
 		public Compression() {
 			mimeTypes.add("text/html");
@@ -180,9 +182,6 @@ public abstract class WebServerConfig {
 			mimeTypes.add("application/json");
 			mimeTypes.add("application/xml");
 		}
-
-		@JsonProperty("min-response-size")
-		private long minResponseSize = 1024 * 64;
 
 		public boolean getEnabled() {
 			return this.enabled;

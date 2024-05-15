@@ -105,7 +105,7 @@ public class LaunchedURLClassLoader extends URLClassLoader {
 			try {
 				URLConnection connection = url.openConnection();
 				if (connection instanceof JarURLConnection) {
-					JarURLConnection jarURLConnection = (JarURLConnection) connection;
+					 JarURLConnection jarURLConnection = (JarURLConnection) connection;
 					JarFile jarFile = jarURLConnection.getJarFile();
 					if (jarFile.getEntry(classEntryName) != null && jarFile.getEntry(packageEntryName) != null
 							&& jarFile.getManifest() != null) {
@@ -212,10 +212,6 @@ public class LaunchedURLClassLoader extends URLClassLoader {
 
 	public Class<?> deployFindLoadedClass(String name) {
 		return super.findLoadedClass(name);
-	}
-	
-	public Package getDefinedPackage(String name) {
-		return super.getPackage(name);
 	}
 
 }

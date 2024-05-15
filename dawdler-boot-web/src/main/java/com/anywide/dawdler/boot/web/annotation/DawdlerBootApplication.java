@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * @email suxuan696@gmail.com
  */
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface DawdlerBootApplication {
 
 }

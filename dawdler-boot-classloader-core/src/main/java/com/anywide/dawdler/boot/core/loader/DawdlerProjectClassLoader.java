@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.anywide.dawdler.boot.server.deploys.loader;
+package com.anywide.dawdler.boot.core.loader;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -25,8 +25,8 @@ import java.security.CodeSource;
 import java.util.Enumeration;
 import java.util.jar.Manifest;
 
-import com.anywide.dawdler.server.context.DawdlerContext;
-import com.anywide.dawdler.server.deploys.loader.DeployClassLoader;
+import com.anywide.dawdler.core.context.DawdlerRuntimeContext;
+import com.anywide.dawdler.core.loader.DeployClassLoader;
 
 import sun.misc.Resource;
 
@@ -39,22 +39,26 @@ import sun.misc.Resource;
  * @email suxuan696@gmail.com
  */
 public class DawdlerProjectClassLoader extends URLClassLoader implements DeployClassLoader {
-	private DawdlerContext dawdlerContext;
 	private ClassLoader parent;
-	private Method method;
+	private Method methodFindClassForDawdlerResource;
+	protected DawdlerRuntimeContext context;
 
-	public DawdlerProjectClassLoader(DawdlerContext dawdlerContext, URL[] urls, ClassLoader parent)
+	public DawdlerProjectClassLoader(ClassLoader parent) throws NoSuchMethodException, SecurityException {
+		this(null, parent);
+	}
+
+	public DawdlerProjectClassLoader(DawdlerRuntimeContext context, ClassLoader parent)
 			throws NoSuchMethodException, SecurityException {
-		super(urls, parent);
-		this.dawdlerContext = dawdlerContext;
+		super(new URL[0], parent);
 		this.parent = parent;
-		this.method = parent.getClass().getDeclaredMethod("findClassForDawdler", String.class, Resource.class,
-				boolean.class);
+		this.methodFindClassForDawdlerResource = parent.getClass().getDeclaredMethod("findClassForDawdler",
+				String.class, Resource.class, boolean.class, boolean.class);
+		this.context = context;
 	}
 
 	@Override
-	public DawdlerContext getDawdlerContext() {
-		return dawdlerContext;
+	public DawdlerRuntimeContext getDawdlerRuntimeContext() {
+		return context;
 	}
 
 	@Override
@@ -79,9 +83,11 @@ public class DawdlerProjectClassLoader extends URLClassLoader implements DeployC
 	}
 
 	@Override
-	public Class<?> findClassForDawdler(String name, Resource res, boolean useAop) throws ClassNotFoundException {
+	public Class<?> findClassForDawdler(String name, Resource res, boolean useAop, boolean storeVariableNameByASM)
+			throws ClassNotFoundException {
 		try {
-			return (Class<?>) method.invoke(parent, name, res, useAop);
+			return (Class<?>) methodFindClassForDawdlerResource.invoke(parent, name, res, useAop,
+					storeVariableNameByASM);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new ClassNotFoundException(name, e);
 		}

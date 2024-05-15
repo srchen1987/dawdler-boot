@@ -72,6 +72,6 @@ public class UserWebApplication {
 
 ```sh
 
-java -jar xxx-all.jar
+java xxx-all.jar
 
 ```
