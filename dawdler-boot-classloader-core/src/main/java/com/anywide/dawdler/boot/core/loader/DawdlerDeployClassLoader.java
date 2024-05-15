@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.anywide.dawdler.boot.server.deploys.loader;
+package com.anywide.dawdler.boot.core.loader;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,9 +23,9 @@ import java.security.SecureClassLoader;
 import java.util.Enumeration;
 import java.util.jar.Manifest;
 
+import com.anywide.dawdler.core.context.DawdlerRuntimeContext;
+import com.anywide.dawdler.core.loader.DeployClassLoader;
 import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
-import com.anywide.dawdler.server.context.DawdlerContext;
-import com.anywide.dawdler.server.deploys.loader.DeployClassLoader;
 
 import sun.misc.Resource;
 
@@ -39,17 +39,19 @@ import sun.misc.Resource;
  */
 public class DawdlerDeployClassLoader extends SecureClassLoader implements DeployClassLoader {
 	private final LaunchedURLClassLoader classLoader;
-	private final DawdlerContext dawdlerContext;
+	private final DawdlerRuntimeContext dawdlerRuntimeContext;
 
-	public DawdlerDeployClassLoader(LaunchedURLClassLoader classLoader, DawdlerContext dawdlerContext) {
+	public DawdlerDeployClassLoader(LaunchedURLClassLoader classLoader, DawdlerRuntimeContext dawdlerRuntimeContext)
+			throws Exception {
 		super(classLoader);
 		this.classLoader = classLoader;
-		this.dawdlerContext = dawdlerContext;
+		this.dawdlerRuntimeContext = dawdlerRuntimeContext;
+		loadAspectj();
 	}
 
 	@Override
-	public DawdlerContext getDawdlerContext() {
-		return dawdlerContext;
+	public DawdlerRuntimeContext getDawdlerRuntimeContext() {
+		return dawdlerRuntimeContext;
 	}
 
 	@Override
@@ -70,7 +72,8 @@ public class DawdlerDeployClassLoader extends SecureClassLoader implements Deplo
 	}
 
 	@Override
-	public Class<?> findClassForDawdler(String name, Resource res, boolean useAop) throws ClassNotFoundException {
+	public Class<?> findClassForDawdler(String name, Resource res, boolean useAop, boolean storeVariableNameByASM)
+			throws ClassNotFoundException {
 		Class<?> clazz = findLoadedClass(name);
 		if (clazz == null) {
 			clazz = classLoader.deployFindLoadedClass(name);
@@ -84,7 +87,7 @@ public class DawdlerDeployClassLoader extends SecureClassLoader implements Deplo
 		}
 		if (res != null) {
 			try {
-				return defineClassForDawdler(name, res, useAop);
+				return defineClassForDawdler(name, res, useAop, storeVariableNameByASM);
 			} catch (IOException e) {
 				throw new ClassNotFoundException(name, e);
 			}
@@ -109,7 +112,7 @@ public class DawdlerDeployClassLoader extends SecureClassLoader implements Deplo
 	}
 
 	public Package getDeployDefinedPackage(String name) {
-		return classLoader.getDefinedPackage(name);
+		return getPackage(name);
 	}
 
 	@Override

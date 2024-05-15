@@ -30,6 +30,7 @@ import java.util.ServiceLoader;
  */
 public class WebServerProvider {
 	private static final List<WebServer> WEB_SERVERS = new ArrayList<>();
+
 	static {
 		ServiceLoader.load(WebServer.class).forEach(webServer -> {
 			WEB_SERVERS.add(webServer);

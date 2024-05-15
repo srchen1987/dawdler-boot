@@ -16,15 +16,14 @@
  */
 package com.anywide.dawdler.boot.web.server.component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ServiceLoader;
-
-import javax.servlet.ServletContainerInitializer;
-
 import com.anywide.dawdler.core.annotation.Order;
 import com.anywide.dawdler.core.order.OrderComparator;
 import com.anywide.dawdler.core.order.OrderData;
+
+import javax.servlet.ServletContainerInitializer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ServiceLoader;
 
 /**
  * @author jackson.song
@@ -36,6 +35,7 @@ import com.anywide.dawdler.core.order.OrderData;
  */
 public class ServletContainerInitializerProvider {
 	private final static List<OrderData<ServletContainerInitializer>> SERVLET_CONTAINER_INITIALIZERS = new ArrayList<>();
+
 	static {
 		ServiceLoader.load(ServletContainerInitializer.class).forEach(initializer -> {
 			OrderData<ServletContainerInitializer> orderData = new OrderData<>();
@@ -44,9 +44,9 @@ public class ServletContainerInitializerProvider {
 				orderData.setOrder(order.value());
 			}
 			orderData.setData(initializer);
-			OrderComparator.sort(SERVLET_CONTAINER_INITIALIZERS);
 			SERVLET_CONTAINER_INITIALIZERS.add(orderData);
 		});
+		OrderComparator.sort(SERVLET_CONTAINER_INITIALIZERS);
 	}
 
 	public static List<OrderData<ServletContainerInitializer>> getServletcontainerinitializers() {

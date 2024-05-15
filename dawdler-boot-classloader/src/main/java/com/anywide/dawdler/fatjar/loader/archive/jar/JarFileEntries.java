@@ -23,7 +23,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.jar.Attributes;
+import java.util.jar.Attributes.Name;
 import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
 import com.anywide.dawdler.fatjar.loader.file.RandomAccessData;
@@ -32,6 +35,14 @@ public class JarFileEntries implements CentralDirectoryVisitor, Iterable<NestedJ
 
 	private static final Runnable NO_VALIDATION = () -> {
 	};
+
+	private static final String META_INF_PREFIX = "META-INF/";
+
+	private static final Name MULTI_RELEASE = new Name("Multi-Release");
+
+	private static final int BASE_VERSION = 8;
+
+	private static final int RUNTIME_VERSION = 3;//Runtime.version().feature();
 
 	private static final long LOCAL_FILE_HEADER_SIZE = 30;
 
@@ -55,14 +66,18 @@ public class JarFileEntries implements CentralDirectoryVisitor, Iterable<NestedJ
 
 	private int[] positions;
 
+	private Boolean multiReleaseJar;
+
 	private JarEntryCertification[] certifications;
 
 	private final Map<Integer, FileHeader> entriesCache = new LinkedHashMap<Integer, FileHeader>(16, 0.75f) {
 		private static final long serialVersionUID = 5349157479958637921L;
+
 		@Override
 		protected boolean removeEldestEntry(Map.Entry<Integer, FileHeader> eldest) {
 			return size() >= ENTRY_CACHE_SIZE;
 		}
+
 	};
 
 	JarFileEntries(NestedJarFile jarFile, JarEntryFilter filter) {
@@ -193,7 +208,48 @@ public class JarFileEntries implements CentralDirectoryVisitor, Iterable<NestedJ
 
 	private <T extends FileHeader> T getEntry(CharSequence name, Class<T> type, boolean cacheEntry) {
 		T entry = doGetEntry(name, type, cacheEntry, null);
+		if (!isMetaInfEntry(name) && isMultiReleaseJar()) {
+			int version = RUNTIME_VERSION;
+			AsciiBytes nameAlias;
+			if(entry instanceof NestedJarEntry) {
+				NestedJarEntry jarEntry = (NestedJarEntry)entry;
+				nameAlias = jarEntry.getAsciiBytesName();
+			} else{
+				nameAlias = new AsciiBytes(name.toString());
+			}
+			while (version > BASE_VERSION) {
+				T versionedEntry = doGetEntry("META-INF/versions/" + version + "/" + name, type, cacheEntry, nameAlias);
+				if (versionedEntry != null) {
+					return versionedEntry;
+				}
+				version--;
+			}
+		}
 		return entry;
+	}
+
+	private boolean isMetaInfEntry(CharSequence name) {
+		return name.toString().startsWith(META_INF_PREFIX);
+	}
+
+	private boolean isMultiReleaseJar() {
+		Boolean multiRelease = this.multiReleaseJar;
+		if (multiRelease != null) {
+			return multiRelease;
+		}
+		try {
+			Manifest manifest = this.jarFile.getManifest();
+			if (manifest == null) {
+				multiRelease = false;
+			} else {
+				Attributes attributes = manifest.getMainAttributes();
+				multiRelease = attributes.containsKey(MULTI_RELEASE);
+			}
+		} catch (IOException ex) {
+			multiRelease = false;
+		}
+		this.multiReleaseJar = multiRelease;
+		return multiRelease;
 	}
 
 	private <T extends FileHeader> T doGetEntry(CharSequence name, Class<T> type, boolean cacheEntry,

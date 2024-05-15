@@ -1,22 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>dawdler-boot</groupId>
 		<artifactId>dawdler-boot</artifactId>
 		<version>1.8.2-jdk1.8-RELEASES</version>
 	</parent>
-	<artifactId>dawdler-boot-server</artifactId>
-	<name>dawdler-boot-server</name>
+	<artifactId>dawdler-boot-classloader-core</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>dawdler</groupId>
-			<artifactId>dawdler-server</artifactId>
+			<artifactId>dawdler-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>dawdler-boot</groupId>
-			<artifactId>dawdler-boot-classloader-core</artifactId>
+			<artifactId>dawdler-boot-classloader</artifactId>
 		</dependency>
 	</dependencies>
 </project>

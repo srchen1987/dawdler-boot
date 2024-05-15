@@ -16,11 +16,10 @@
  */
 package com.anywide.dawdler.boot.server.deploys;
 
-import java.net.URL;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.anywide.dawdler.boot.server.deploys.loader.DawdlerProjectClassLoader;
+import com.anywide.dawdler.boot.core.loader.DawdlerProjectClassLoader;
 import com.anywide.dawdler.server.conf.ServerConfig;
 import com.anywide.dawdler.server.deploys.AbstractService;
 
@@ -34,11 +33,11 @@ import com.anywide.dawdler.server.deploys.AbstractService;
  */
 public class ProjectServiceBase extends AbstractService {
 
-	public ProjectServiceBase(String deployName, URL[] urls, ServerConfig serverConfig, ClassLoader parent,
+	public ProjectServiceBase(String deployName, ServerConfig serverConfig, ClassLoader parent,
 			Semaphore startSemaphore, AtomicBoolean started) throws Exception {
 		super(serverConfig, deployName, startSemaphore, started);
 		this.deployName = deployName;
-		classLoader = new DawdlerProjectClassLoader(dawdlerContext, urls, parent);
+		classLoader = new DawdlerProjectClassLoader(dawdlerContext, parent);
 		resetContextClassLoader();
 		dawdlerContext.initServicesConfig();
 	}

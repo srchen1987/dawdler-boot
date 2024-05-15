@@ -16,13 +16,16 @@
  */
 package com.anywide.dawdler.boot.web.starter;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
+import com.anywide.dawdler.boot.core.loader.DawdlerDeployClassLoader;
+import com.anywide.dawdler.boot.core.loader.DawdlerProjectClassLoader;
 import com.anywide.dawdler.boot.web.server.WebServer;
 import com.anywide.dawdler.boot.web.server.WebServerProvider;
+import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 import com.anywide.dawdler.util.DawdlerTool;
 import com.anywide.dawdler.util.JVMTimeProvider;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * @author jackson.song
@@ -39,7 +42,16 @@ public class DawdlerBootStarter {
 		Field field = DawdlerTool.class.getDeclaredField("startClass");
 		field.setAccessible(true);
 		field.set(null, startClass);
-
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		if (classLoader instanceof LaunchedURLClassLoader) {
+			LaunchedURLClassLoader launchedURLClassLoader = (LaunchedURLClassLoader) classLoader;
+			DawdlerDeployClassLoader dawdlerDeployClassLoader = new DawdlerDeployClassLoader(launchedURLClassLoader,
+					null);
+			Thread.currentThread().setContextClassLoader(dawdlerDeployClassLoader);
+		} else {
+			DawdlerProjectClassLoader dawdlerProjectClassLoader = new DawdlerProjectClassLoader(classLoader);
+			Thread.currentThread().setContextClassLoader(dawdlerProjectClassLoader);
+		}
 		List<WebServer> webServers = WebServerProvider.getWebServers();
 		if (webServers.isEmpty()) {
 			throw new java.lang.IllegalAccessException("can't found any web runtime container!");

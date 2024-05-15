@@ -48,10 +48,11 @@ public class UserServiceApplication {
 
 ```
 
-### 4. 通过dawdler-boot-maven-plugin打包运行方式(JPMS jdk17+以上需要)
-
+### 4. 通过dawdler-boot-maven-plugin打包运行方式
 
 ```shell
+
+```sh
 
 java -jar xxx-all.jar
 

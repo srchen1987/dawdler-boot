@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.anywide.dawdler.boot.server.deploys.loader;
+package com.anywide.dawdler.boot.core.loader;
 
 import java.io.IOException;
 import java.net.JarURLConnection;
@@ -27,7 +27,7 @@ import java.util.Enumeration;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import com.anywide.dawdler.server.deploys.loader.DeployClassLoader;
+import com.anywide.dawdler.core.loader.DeployClassLoader;
 
 import sun.misc.Resource;
 import sun.misc.URLClassPath;
@@ -45,7 +45,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 	private final URLClassPath ucp;
 	private ClassLoader parent;
 
-	public DawdlerMainClassLoader(URL[] urls, ClassLoader parent) {
+	public DawdlerMainClassLoader(URL[] urls, ClassLoader parent) throws Exception {
 		super(urls, parent);
 		this.ucp = new URLClassPath(urls, null, null);
 		this.parent = parent;
@@ -68,7 +68,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 				if (i != -1) {
 					String pkgname = name.substring(0, i);
 					Manifest man = res.getManifest();
-					definePackageInnner(pkgname, man, url);
+					definePackageInner(pkgname, man, url);
 				}
 				java.nio.ByteBuffer codeByteBuffer = res.getByteBuffer();
 				CodeSigner[] signers = res.getCodeSigners();
@@ -113,7 +113,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 	}
 
 	@Override
-	public Class<?> findClassForDawdler(String name, Resource res, boolean useAop) throws ClassNotFoundException {
+	public Class<?> findClassForDawdler(String name, Resource res, boolean useAop, boolean storeVariableNameByASM) throws ClassNotFoundException {
 		Class<?> clazz = findLoadedClass(name);
 		if (clazz != null) {
 			return clazz;
@@ -124,7 +124,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 		}
 		if (res != null) {
 			try {
-				return defineClassForDawdler(name, res, useAop);
+				return defineClassForDawdler(name, res, useAop, storeVariableNameByASM);
 			} catch (IOException e) {
 				throw new ClassNotFoundException(name, e);
 			}

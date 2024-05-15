@@ -16,34 +16,6 @@
  */
 package com.anywide.dawdler.boot.web.server.component;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EventListener;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.Filter;
-import javax.servlet.Servlet;
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContextAttributeListener;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRequestAttributeListener;
-import javax.servlet.ServletRequestListener;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebListener;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpSessionActivationListener;
-import javax.servlet.http.HttpSessionAttributeListener;
-import javax.servlet.http.HttpSessionBindingListener;
-import javax.servlet.http.HttpSessionListener;
-import javax.websocket.server.ServerEndpoint;
-
 import com.anywide.dawdler.clientplug.web.classloader.ClientPlugClassLoader;
 import com.anywide.dawdler.core.scan.DawdlerComponentScanner;
 import com.anywide.dawdler.core.scan.component.reader.ClassStructureParser;
@@ -51,22 +23,31 @@ import com.anywide.dawdler.core.scan.component.reader.ClassStructureParser.Class
 import com.anywide.dawdler.util.DawdlerTool;
 import com.anywide.dawdler.util.spring.antpath.Resource;
 
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+
 /**
  * @author jackson.song
  * @version V1.0
  * @Title ServletComponentProvider.java
  * @Description web组件提供者 支持 servlet filter listener
- *              ServletContainerInitializer实现类的@HandlesTypes
+ * ServletContainerInitializer实现类的@HandlesTypes
  * @date 2023年11月17日
  * @email suxuan696@gmail.com
  */
 public class ServletComponentProvider {
+	private static final ServletComponentProvider INSTANCE = new ServletComponentProvider();
 	private final List<Class<Servlet>> HTTP_SERVLET_LIST = new ArrayList<>();
 	private final List<Class<Filter>> WEB_FILTER_LIST = new ArrayList<>();
 	private final List<Class<EventListener>> EVENT_LISTENER_LIST = new ArrayList<>();
 	private final List<Class<?>> END_POINT_LIST = new ArrayList<>();
-
-	private static final ServletComponentProvider INSTANCE = new ServletComponentProvider();
 
 	private ServletComponentProvider() {
 	}
@@ -76,7 +57,7 @@ public class ServletComponentProvider {
 	}
 
 	public void scanComponent(String[] packagePaths,
-			Map<ServletContainerInitializer, ServletContainerInitializerData> servletContainerInitializerMap)
+							  Map<ServletContainerInitializer, ServletContainerInitializerData> servletContainerInitializerMap)
 			throws IOException {
 		ClientPlugClassLoader clientPlugClassLoader = ClientPlugClassLoader.newInstance(DawdlerTool.getCurrentPath());
 		Map<String, Resource> removeDuplicates = new LinkedHashMap<>();
@@ -110,13 +91,13 @@ public class ServletComponentProvider {
 						WEB_FILTER_LIST.add(clazz);
 					} else if (annotationNames.contains(WebListener.class.getName())
 							&& (interfaces.contains(ServletContextListener.class.getName())
-									|| interfaces.contains(ServletContextAttributeListener.class.getName())
-									|| interfaces.contains(HttpSessionListener.class.getName())
-									|| interfaces.contains(HttpSessionAttributeListener.class.getName())
-									|| interfaces.contains(HttpSessionBindingListener.class.getName())
-									|| interfaces.contains(HttpSessionActivationListener.class.getName())
-									|| interfaces.contains(ServletRequestListener.class.getName())
-									|| interfaces.contains(ServletRequestAttributeListener.class.getName()))) {
+							|| interfaces.contains(ServletContextAttributeListener.class.getName())
+							|| interfaces.contains(HttpSessionListener.class.getName())
+							|| interfaces.contains(HttpSessionAttributeListener.class.getName())
+							|| interfaces.contains(HttpSessionBindingListener.class.getName())
+							|| interfaces.contains(HttpSessionActivationListener.class.getName())
+							|| interfaces.contains(ServletRequestListener.class.getName())
+							|| interfaces.contains(ServletRequestAttributeListener.class.getName()))) {
 						Class<EventListener> clazz = (Class<EventListener>) clientPlugClassLoader
 								.defineClass(classStructure.getClassName(), resource, true);
 						EVENT_LISTENER_LIST.add(clazz);
