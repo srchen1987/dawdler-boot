@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>dawdler</groupId>
 		<artifactId>dawdler</artifactId>
-		<version>0.17.1-jdk17-RELEASES</version>
+		<version>0.17.2-jdk17-RELEASES</version>
 	</parent>
 	<groupId>dawdler-boot</groupId>
 	<artifactId>dawdler-boot</artifactId>
@@ -31,6 +31,7 @@
 		<module>dawdler-boot-web-undertow</module>
 		<module>dawdler-boot-web-dependencies</module>
 		<module>dawdler-boot-web-undertow-jsp</module>
+		<module>dawdler-boot-classloader-core</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -42,6 +43,11 @@
 			<dependency>
 				<groupId>dawdler-boot</groupId>
 				<artifactId>dawdler-boot-classloader</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>dawdler-boot</groupId>
+				<artifactId>dawdler-boot-classloader-core</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
 			<dependency>

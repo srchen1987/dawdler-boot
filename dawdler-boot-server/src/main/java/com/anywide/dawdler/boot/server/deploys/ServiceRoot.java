@@ -18,7 +18,6 @@ package com.anywide.dawdler.boot.server.deploys;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.net.URL;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
@@ -26,14 +25,13 @@ import org.slf4j.LoggerFactory;
 
 import com.anywide.dawdler.boot.server.annotation.DawdlerBootApplication;
 import com.anywide.dawdler.core.health.Status;
+import com.anywide.dawdler.core.loader.DeployClassLoader;
 import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 import com.anywide.dawdler.server.conf.ServerConfig;
 import com.anywide.dawdler.server.conf.ServerConfig.Server;
 import com.anywide.dawdler.server.context.DawdlerServerContext;
 import com.anywide.dawdler.server.deploys.AbstractServiceRoot;
 import com.anywide.dawdler.server.deploys.Service;
-import com.anywide.dawdler.server.deploys.loader.DeployClassLoader;
-import com.anywide.dawdler.server.loader.DawdlerClassLoader;
 import com.anywide.dawdler.util.DawdlerTool;
 import com.anywide.dawdler.util.JVMTimeProvider;
 
@@ -74,7 +72,7 @@ public class ServiceRoot extends AbstractServiceRoot {
 				service = new ServiceBase(deployName, serverConfig, launchedURLClassLoader,
 						dawdlerServerContext.getStartSemaphore(), dawdlerServerContext.getStarted());
 			} else {
-				service = new ProjectServiceBase(deployName, new URL[0], serverConfig, classLoader,
+				service = new ProjectServiceBase(deployName, serverConfig, classLoader,
 						dawdlerServerContext.getStartSemaphore(), dawdlerServerContext.getStarted());
 			}
 			if (healthCheck) {
@@ -118,10 +116,6 @@ public class ServiceRoot extends AbstractServiceRoot {
 			return service.getStatus();
 		}
 		return null;
-	}
-
-	public ClassLoader createServerClassLoader() {
-		return DawdlerClassLoader.createLoader(null, Thread.currentThread().getContextClassLoader());
 	}
 
 	public void closeClassLoader() {

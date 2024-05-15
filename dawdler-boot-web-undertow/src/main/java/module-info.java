@@ -23,7 +23,7 @@ module dawdler.boot.web.undertow {
 	requires com.fasterxml.jackson.databind;
 	requires jakarta.servlet;
 	requires transitive dawdler.core;
-	requires undertow.servlet;
+	requires transitive undertow.servlet;
 
 	opens com.anywide.dawdler.boot.web.undertow.error to dawdler.boot.web;
 	opens com.anywide.dawdler.boot.web.undertow.config;

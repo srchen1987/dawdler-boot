@@ -19,7 +19,7 @@ package com.anywide.dawdler.boot.server.deploys;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.anywide.dawdler.boot.server.deploys.loader.DawdlerDeployClassLoader;
+import com.anywide.dawdler.boot.core.loader.DawdlerDeployClassLoader;
 import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 import com.anywide.dawdler.server.conf.ServerConfig;
 import com.anywide.dawdler.server.deploys.AbstractService;

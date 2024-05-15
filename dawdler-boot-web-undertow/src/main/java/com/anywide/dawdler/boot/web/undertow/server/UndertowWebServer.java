@@ -163,8 +163,9 @@ public class UndertowWebServer implements WebServer {
 			Server server = undertowConfig.getServer();
 			port = server.getPort();
 			DeploymentInfo deployment = Servlets.deployment();
+			deployment.setClassLoader(Thread.currentThread().getContextClassLoader());
 			addServletContainerInitializers(deployment, servletContainerInitializerMap);
-			ServletContainer container = ServletContainer.Factory.newInstance();
+			ServletContainer container = Servlets.newContainer();
 			List<OrderData<UndertowDeployer>> deployers = UndertowDeployerProvider.getInstance().getDeployers();
 			for (OrderData<UndertowDeployer> orderData : deployers) {
 				orderData.getData().deploy(undertowConfig, deployment);
@@ -179,9 +180,11 @@ public class UndertowWebServer implements WebServer {
 			PathHandler servletPath = new PathHandler();
 			servletPath.addPrefixPath(deployment.getContextPath(), httpHandler);
 			Builder builder = Undertow.builder();
-			configSocketOptions(builder);
-			configUndertowServerOption(builder);
-			configUndertow(builder);
+			if (undertowConfig.getUndertow() != null) {
+				configSocketOptions(builder);
+				configUndertowServerOption(builder);
+				configUndertow(builder);
+			}
 			builder.setHandler(servletPath);
 			bindServer(builder);
 			undertow = builder.build();
@@ -296,7 +299,6 @@ public class UndertowWebServer implements WebServer {
 						if (field.getType().isAssignableFrom(Option.class)) {
 							Option option = (Option) field.get(null);
 							try {
-								option.cast(v);
 								builder.setServerOption(option, v);
 							} catch (Exception e) {
 								throw new IllegalArgumentException("unknown undertow-options " + k + " : " + v + " !",
@@ -347,23 +349,21 @@ public class UndertowWebServer implements WebServer {
 
 	private void configUndertow(Builder builder) {
 		com.anywide.dawdler.boot.web.undertow.config.UndertowConfig.Undertow undertow = undertowConfig.getUndertow();
-		if (undertow != null) {
-			Integer bufferSize = undertow.getBufferSize();
-			if (bufferSize != null) {
-				builder.setBufferSize(bufferSize);
-			}
-			Integer ioThreads = undertow.getIoThreads();
-			if (ioThreads != null) {
-				builder.setIoThreads(ioThreads);
-			}
-			Integer workerThreads = undertow.getWorkerThreads();
-			if (workerThreads != null) {
-				builder.setWorkerThreads(workerThreads);
-			}
-			Boolean directBuffers = undertow.getDirectBuffers();
-			if (directBuffers != null) {
-				builder.setDirectBuffers(directBuffers);
-			}
+		Integer bufferSize = undertow.getBufferSize();
+		if (bufferSize != null) {
+			builder.setBufferSize(bufferSize);
+		}
+		Integer ioThreads = undertow.getIoThreads();
+		if (ioThreads != null) {
+			builder.setIoThreads(ioThreads);
+		}
+		Integer workerThreads = undertow.getWorkerThreads();
+		if (workerThreads != null) {
+			builder.setWorkerThreads(workerThreads);
+		}
+		Boolean directBuffers = undertow.getDirectBuffers();
+		if (directBuffers != null) {
+			builder.setDirectBuffers(directBuffers);
 		}
 	}
 

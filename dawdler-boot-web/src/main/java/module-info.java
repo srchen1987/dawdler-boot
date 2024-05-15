@@ -8,6 +8,7 @@ module dawdler.boot.web {
 	requires jakarta.servlet;
 	requires jakarta.websocket;
 	requires dawdler.boot.classloader;
+	requires dawdler.boot.classloader.core;
 
 	exports com.anywide.dawdler.boot.web.annotation;
 	exports com.anywide.dawdler.boot.web.starter;
@@ -18,8 +19,6 @@ module dawdler.boot.web {
 	opens com.anywide.dawdler.boot.web.config;
 
 	uses com.anywide.dawdler.boot.web.server.WebServer;
-
-	exports com.anywide.dawdler.boot.web.loader;
 
 	uses jakarta.servlet.ServletContainerInitializer;
 }

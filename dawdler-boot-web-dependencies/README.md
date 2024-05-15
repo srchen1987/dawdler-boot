@@ -14,7 +14,7 @@ pom.xml中加入
 			<dependency>
 				<groupId>dawdler-boot</groupId>
 				<artifactId>dawdler-boot-web-dependencies</artifactId>
-				<version>0.17.1-jdk17-RELEASES</version>
+				<version>0.17.2-jdk17-RELEASES</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

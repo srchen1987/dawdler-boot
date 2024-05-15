@@ -44,9 +44,9 @@ public class ServletContainerInitializerProvider {
 				orderData.setOrder(order.value());
 			}
 			orderData.setData(initializer);
-			OrderComparator.sort(SERVLET_CONTAINER_INITIALIZERS);
 			SERVLET_CONTAINER_INITIALIZERS.add(orderData);
 		});
+		OrderComparator.sort(SERVLET_CONTAINER_INITIALIZERS);
 	}
 
 	public static List<OrderData<ServletContainerInitializer>> getServletcontainerinitializers() {

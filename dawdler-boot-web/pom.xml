@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>dawdler-boot</groupId>
 		<artifactId>dawdler-boot</artifactId>
-		<version>0.17.1-jdk17-RELEASES</version>
+		<version>0.17.2-jdk17-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot-web</artifactId>
 	<name>dawdler-boot-web</name>
@@ -13,14 +13,6 @@
 		<dependency>
 			<groupId>dawdler</groupId>
 			<artifactId>dawdler-client-plug-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>dawdler</groupId>
-			<artifactId>dawdler-client-plug-config-center-consul</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>dawdler</groupId>
-			<artifactId>dawdler-client-plug-discovery-center-consul</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
@@ -36,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>dawdler-boot</groupId>
-			<artifactId>dawdler-boot-classloader</artifactId>
+			<artifactId>dawdler-boot-classloader-core</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
@@ -57,6 +49,10 @@
 						<arg>java.base/jdk.internal.perf=dawdler.boot.web</arg>
 						<arg>--add-exports</arg>
 						<arg>java.base/jdk.internal.loader=dawdler.util</arg>
+						<arg>--add-exports</arg>
+						<arg>java.base/jdk.internal.loader=dawdler.core</arg>
+						<arg>--add-exports</arg>
+						<arg>java.base/jdk.internal.loader=dawdler.boot.classloader</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>

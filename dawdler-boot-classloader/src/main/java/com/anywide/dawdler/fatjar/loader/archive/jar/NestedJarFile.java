@@ -184,7 +184,7 @@ public class NestedJarFile extends JarFile {
 	}
 
 	public Iterator<NestedJarEntry> iterator() {
-		return (Iterator) this.entries.iterator(this::ensureOpen);
+		return (Iterator<NestedJarEntry>) this.entries.iterator(this::ensureOpen);
 	}
 
 	public JarEntry getJarEntry(CharSequence name) {

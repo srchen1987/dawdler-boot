@@ -5,11 +5,16 @@
 	<parent>
 		<groupId>dawdler-boot</groupId>
 		<artifactId>dawdler-boot</artifactId>
-		<version>0.17.1-jdk17-RELEASES</version>
+		<version>0.17.2-jdk17-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot-maven-plugin</artifactId>
 	<name>dawdler-boot-maven-plugin</name>
 	<packaging>maven-plugin</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -76,10 +81,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<release>${maven.compiler.target}</release>
-						<source>17</source>
-						<target>17</target>
-						<encoding>UTF-8</encoding>
 						<verbose>true</verbose>
 						<fork>true</fork>
 					</configuration>

@@ -1,14 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>dawdler-boot</groupId>
 		<artifactId>dawdler-boot</artifactId>
 		<version>0.17.2-jdk17-RELEASES</version>
 	</parent>
-	<artifactId>dawdler-boot-classloader</artifactId>
-	<name>dawdler-boot-classloader</name>
+	<artifactId>dawdler-boot-classloader-core</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>dawdler</groupId>
+			<artifactId>dawdler-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>dawdler-boot</groupId>
+			<artifactId>dawdler-boot-classloader</artifactId>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -21,28 +31,27 @@
 					<compilerArgs>
 						<arg>--add-exports</arg>
 						<arg>
+							java.base/jdk.internal.loader=dawdler.boot.classloader.core</arg>
+						<arg>--add-exports</arg>
+						<arg>
+							java.base/jdk.internal.misc=dawdler.boot.classloader.core</arg>
+						<arg>--add-exports</arg>
+						<arg>
+							java.base/jdk.internal.perf=dawdler.boot.classloader.core</arg>
+						<arg>--add-exports</arg>
+						<arg>
 							java.base/jdk.internal.loader=dawdler.boot.classloader</arg>
 						<arg>--add-exports</arg>
 						<arg>
 							java.base/jdk.internal.misc=dawdler.boot.classloader</arg>
 						<arg>--add-exports</arg>
 						<arg>
+							java.base/jdk.internal.loader=dawdler.core</arg>
+						<arg>--add-exports</arg>
+						<arg>
 							java.base/jdk.internal.perf=dawdler.boot.classloader</arg>
+
 					</compilerArgs>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>
-								com.anywide.dawdler.fatjar.loader.launcher.JarLauncher</mainClass>
-						</manifest>
-					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
