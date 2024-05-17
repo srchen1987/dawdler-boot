@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -162,7 +164,12 @@ public class UndertowWebServer implements WebServer {
 			boolean useWebsocket = !scanServletComponent.getEndPointList().isEmpty();
 			Server server = undertowConfig.getServer();
 			port = server.getPort();
+			Boolean virtualThread = undertowConfig.getUndertow().getVirtualThread();
 			DeploymentInfo deployment = Servlets.deployment();
+			if(virtualThread !=null && virtualThread) {
+				ThreadFactory factory = Thread.ofVirtual().name("undertow-virtual-executor@", 1).factory();
+				deployment.setExecutor(Executors.newThreadPerTaskExecutor(factory));
+			}
 			deployment.setClassLoader(Thread.currentThread().getContextClassLoader());
 			addServletContainerInitializers(deployment, servletContainerInitializerMap);
 			ServletContainer container = Servlets.newContainer();

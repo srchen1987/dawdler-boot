@@ -73,6 +73,10 @@ public class UndertowConfig extends WebServerConfig {
 		@JsonProperty("direct-buffers")
 		private Boolean directBuffers;
 
+		@JsonProperty("virtual-thread")
+		private Boolean virtualThread;
+
+
 		public Integer getBufferSize() {
 			return bufferSize;
 		}
@@ -120,6 +124,14 @@ public class UndertowConfig extends WebServerConfig {
 		public void setSocketOptions(Map<String, Object> socketOptions) {
 			this.socketOptions = socketOptions;
 		}
+
+		public Boolean getVirtualThread() {
+            return virtualThread;
+        }
+
+		public void setVirtualThread(Boolean virtualThread) {
+            this.virtualThread = virtualThread;
+        }
 
 	}
 
