@@ -38,10 +38,7 @@ import com.anywide.dawdler.util.JVMTimeProvider;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ServiceRoot.java
- * @Description boot模块的根实现(改造后继承AbstractServiceRoot)
- * @date 2023年11月15日
- * @email suxuan696@gmail.com
+ * boot模块的根实现(改造后继承AbstractServiceRoot)
  */
 public class ServiceRoot extends AbstractServiceRoot {
 	public ServiceRoot(Class<?> startClass) throws Exception {

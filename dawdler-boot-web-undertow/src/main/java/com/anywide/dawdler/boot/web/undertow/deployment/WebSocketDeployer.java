@@ -24,10 +24,7 @@ import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title WebSocketDeployer.java
- * @Description webscoket
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * webscoket
  */
 public class WebSocketDeployer implements UndertowDeployer {
 

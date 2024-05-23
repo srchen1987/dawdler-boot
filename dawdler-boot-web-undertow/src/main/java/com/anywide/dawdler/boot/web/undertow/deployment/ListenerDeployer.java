@@ -27,10 +27,7 @@ import io.undertow.servlet.api.DeploymentInfo;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ListenerDeployer.java
- * @Description 监听器
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * 监听器
  */
 public class ListenerDeployer implements UndertowDeployer {
 

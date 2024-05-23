@@ -12,7 +12,7 @@ pom.xml中加入
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-server-dependencies</artifactId>
 				<version>1.8.2-jdk1.8-RELEASES</version>
 				<type>pom</type>

@@ -23,10 +23,7 @@ import java.util.ServiceLoader;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title WebServerProvider.java
- * @Description web器提供者通过SPI接入
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
+ * web器提供者通过SPI接入
  */
 public class WebServerProvider {
 	private static final List<WebServer> WEB_SERVERS = new ArrayList<>();

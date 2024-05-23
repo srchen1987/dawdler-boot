@@ -19,10 +19,7 @@ package com.anywide.dawdler.boot.web.server;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title WebServer.java
- * @Description web器服务接口
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
+ * web器服务接口
  */
 public interface WebServer {
 
