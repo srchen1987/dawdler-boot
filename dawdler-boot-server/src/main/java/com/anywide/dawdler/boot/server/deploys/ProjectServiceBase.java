@@ -26,10 +26,7 @@ import com.anywide.dawdler.server.deploys.AbstractService;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ProjectServiceBase.java
- * @Description main方法运行项目中的服务模块具体实现类
- * @date 2023年11月15日
- * @email suxuan696@gmail.com
+ * main方法运行项目中的服务模块具体实现类
  */
 public class ProjectServiceBase extends AbstractService {
 

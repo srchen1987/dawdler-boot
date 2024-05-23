@@ -30,10 +30,7 @@ import com.anywide.dawdler.util.JVMTimeProvider;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title DawdlerBootStarter.java
- * @Description boot启动器
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
+ * boot启动器
  */
 public class DawdlerBootStarter {
 	public static void run(Class<?> startClass, String... args) throws Throwable {

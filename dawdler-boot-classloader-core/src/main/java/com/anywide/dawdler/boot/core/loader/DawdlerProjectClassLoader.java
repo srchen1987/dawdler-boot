@@ -33,10 +33,7 @@ import jdk.internal.loader.Resource;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title DawdlerDeployClassLoader.java
- * @Description boot模块中项目启动的类加载器
- * @date 2023年11月16日
- * @email suxuan696@gmail.com
+ * boot模块中项目启动的类加载器
  */
 public class DawdlerProjectClassLoader extends URLClassLoader implements DeployClassLoader {
 	private ClassLoader parent;

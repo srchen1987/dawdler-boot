@@ -54,11 +54,8 @@ import jakarta.websocket.server.ServerEndpoint;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ServletComponentProvider.java
- * @Description web组件提供者 支持 servlet filter listener
+ * web组件提供者 支持 servlet filter listener
  *              ServletContainerInitializer实现类的@HandlesTypes
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
  */
 public class ServletComponentProvider {
 	private final List<Class<Servlet>> HTTP_SERVLET_LIST = new ArrayList<>();

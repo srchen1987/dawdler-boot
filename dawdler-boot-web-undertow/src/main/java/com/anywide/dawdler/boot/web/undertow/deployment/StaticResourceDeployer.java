@@ -33,10 +33,7 @@ import io.undertow.servlet.api.DeploymentInfo;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title StaticResourceDeployer.java
- * @Description 静态资源文件
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * 静态资源文件
  */
 public class StaticResourceDeployer implements UndertowDeployer {
 
