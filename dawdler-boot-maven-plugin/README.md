@@ -10,7 +10,7 @@ pom.xml中加入
 
 ```xml
 			<plugin>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-maven-plugin</artifactId>
 				<version>1.8.2-jdk1.8-RELEASES</version>
 				<executions>

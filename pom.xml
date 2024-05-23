@@ -3,12 +3,39 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>dawdler</groupId>
+		<groupId>io.github.dawdler-series</groupId>
 		<artifactId>dawdler</artifactId>
 		<version>1.8.2-jdk1.8-RELEASES</version>
 	</parent>
-	<groupId>dawdler-boot</groupId>
 	<artifactId>dawdler-boot</artifactId>
+	<description>Micro service solutions</description>
+	<url>https://github.com/srchen1987/dawdler-boot</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>srchen1987</id>
+			<name>srchen1987</name>
+			<email>suxuan696@gmail.com</email>
+			<roles>
+				<role>Project Manager</role>
+				<role>Architect</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>https://github.com/srchen1987/dawdler-boot.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:srchen1987/dawdler-boot.git </developerConnection>
+		<url>https://github.com/srchen1987/dawdler-boot</url>
+	</scm>
+
 	<packaging>pom</packaging>
 	<properties>
 		<undertow.version>1.4.28.Final</undertow.version>
@@ -36,32 +63,32 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-server</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-classloader</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-classloader-core</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-web</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-web-undertow</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>dawdler-boot</groupId>
+				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-web-undertow-jsp</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
@@ -149,7 +176,7 @@
 				<configuration>
 					<archive>
 						<manifestEntries>
-							<Built-By>dawdler</Built-By>
+							<Built-By>dawdler-series</Built-By>
 						</manifestEntries>
 					</archive>
 				</configuration>

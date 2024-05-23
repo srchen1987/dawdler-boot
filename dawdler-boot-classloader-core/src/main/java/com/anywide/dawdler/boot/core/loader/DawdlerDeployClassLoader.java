@@ -32,10 +32,7 @@ import sun.misc.Resource;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title DawdlerDeployClassLoader.java
- * @Description boot模块中jar启动的类加载器
- * @date 2023年11月15日
- * @email suxuan696@gmail.com
+ * boot模块中jar启动的类加载器
  */
 public class DawdlerDeployClassLoader extends SecureClassLoader implements DeployClassLoader {
 	private final LaunchedURLClassLoader classLoader;

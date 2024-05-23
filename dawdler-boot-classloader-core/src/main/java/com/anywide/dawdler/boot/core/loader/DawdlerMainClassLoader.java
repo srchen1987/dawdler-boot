@@ -36,10 +36,7 @@ import sun.misc.PerfCounter;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title DawdlerMainClassLoader.java
- * @Description boot模块中jar启动的类加载器(parent)
- * @date 2023年11月15日
- * @email suxuan696@gmail.com
+ * boot模块中jar启动的类加载器(parent)
  */
 public class DawdlerMainClassLoader extends URLClassLoader implements DeployClassLoader {
 	private final URLClassPath ucp;

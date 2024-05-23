@@ -30,10 +30,7 @@ import javax.servlet.annotation.WebServlet;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ServletDeployer.java
- * @Description servlet
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * servlet
  */
 public class ServletDeployer implements UndertowDeployer {
 

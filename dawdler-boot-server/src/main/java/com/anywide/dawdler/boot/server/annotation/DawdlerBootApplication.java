@@ -24,10 +24,7 @@ import java.lang.annotation.Target;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title DawdlerBootApplication.java
- * @Description DawdlerBootServerApplication注解 用于标识服务
- * @date 2023年11月15日
- * @email suxuan696@gmail.com
+ * DawdlerBootServerApplication注解 用于标识服务
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })

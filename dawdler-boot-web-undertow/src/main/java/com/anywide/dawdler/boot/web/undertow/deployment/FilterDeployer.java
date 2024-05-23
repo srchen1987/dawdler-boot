@@ -31,10 +31,7 @@ import javax.servlet.annotation.WebInitParam;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title FilterDeployer.java
- * @Description 过滤器
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * 过滤器
  */
 public class FilterDeployer implements UndertowDeployer {
 

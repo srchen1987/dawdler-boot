@@ -24,10 +24,7 @@ import io.undertow.servlet.api.DeploymentInfo;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title UndertowDeployer.java
- * @Description deployer接口 SPI方式接入
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * deployer接口 SPI方式接入
  */
 public interface UndertowDeployer {
 

@@ -24,10 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ServletContainerInitializerData.java
- * @Description 存放ServletContainerInitializer实现类的@HandlesTypes关系
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
+ * 存放ServletContainerInitializer实现类的@HandlesTypes关系
  */
 public class ServletContainerInitializerData {
 

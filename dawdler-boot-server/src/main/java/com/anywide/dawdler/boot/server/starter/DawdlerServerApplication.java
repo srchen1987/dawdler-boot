@@ -30,10 +30,7 @@ import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title DawdlerServerApplication.java
- * @Description dawdler服务入口程序(main方法调用此类)
- * @date 2023年11月16日
- * @email suxuan696@gmail.com
+ * dawdler服务入口程序(main方法调用此类)
  */
 public class DawdlerServerApplication {
 

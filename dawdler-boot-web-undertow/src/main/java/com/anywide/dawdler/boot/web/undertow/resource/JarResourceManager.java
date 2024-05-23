@@ -27,10 +27,7 @@ import io.undertow.server.handlers.resource.URLResource;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title JarResourceManager.java
- * @Description jar中的资源管理器用于读取jar包中的资源文件
- * @date 2023年11月19日
- * @email suxuan696@gmail.com
+ * jar中的资源管理器用于读取jar包中的资源文件
  */
 public class JarResourceManager implements ResourceManager {
 

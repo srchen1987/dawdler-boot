@@ -30,10 +30,7 @@ import java.util.Optional;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title DawdlerWebApplication.java
- * @Description dawdler-web服务入口程序(main方法调用此类)
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
+ * dawdler-web服务入口程序(main方法调用此类)
  */
 public class DawdlerWebApplication {
 	public static void run(Class<?> startClass, String... args) throws Throwable {
