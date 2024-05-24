@@ -25,10 +25,7 @@ import io.undertow.util.Headers;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title CompressibleMimeTypePredicate.java
- * @Description 符合mimeTypes的压缩条件
- * @date 2023年11月19日
- * @email suxuan696@gmail.com
+ * 符合mimeTypes的压缩条件
  */
 public class CompressibleMimeTypePredicate implements Predicate {
 	private final Set<String> mimeTypes;

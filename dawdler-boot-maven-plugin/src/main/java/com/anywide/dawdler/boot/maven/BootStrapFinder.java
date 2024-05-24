@@ -29,10 +29,7 @@ import org.objectweb.asm.tree.ClassNode;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title BootStrapFinder.java
- * @Description 查找boot中的启动类
- * @date 2023年11月22日
- * @email suxuan696@gmail.com
+ * 查找boot中的启动类
  */
 public class BootStrapFinder {
 	public static final String DAWDLER_SERVER_BOOT_APPLICATION_NAME = "com.anywide.dawdler.boot.server.annotation.DawdlerBootApplication";

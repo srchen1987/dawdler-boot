@@ -27,10 +27,7 @@ import com.anywide.dawdler.core.order.OrderData;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title UndertowDeployerProvider.java
- * @Description deployer提供者 SPI方式接入
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * deployer提供者 SPI方式接入
  */
 public class UndertowDeployerProvider {
 	private static final UndertowDeployerProvider INSTANCE = new UndertowDeployerProvider();

@@ -25,10 +25,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title UndertowConfig.java
- * @Description undertow服务的配置类
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
+ * undertow服务的配置类
  */
 public class UndertowConfig extends WebServerConfig {
 

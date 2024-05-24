@@ -25,10 +25,7 @@ import io.undertow.server.HttpServerExchange;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title UndertowExceptionHandler.java
- * @Description 异常处理器
- * @date 2023年11月19日
- * @email suxuan696@gmail.com
+ * 异常处理器
  */
 public class UndertowExceptionHandler implements HttpHandler {
 	private static Logger logger = LoggerFactory.getLogger(UndertowExceptionHandler.class);

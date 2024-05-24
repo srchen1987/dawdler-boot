@@ -11,7 +11,7 @@ pom.xml中加入
 ```xml
 	<dependencies>
 		<dependency>
-			<groupId>dawdler-boot</groupId>
+			<groupId>io.github.dawdler-series</groupId>
 			<artifactId>dawdler-boot-web-undertow-jsp</artifactId>
 		</dependency>
 	</dependencies>

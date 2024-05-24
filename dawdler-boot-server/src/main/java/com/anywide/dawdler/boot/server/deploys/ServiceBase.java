@@ -27,10 +27,7 @@ import com.anywide.dawdler.server.deploys.AbstractService;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ServiceBase.java
- * @Description 通过dawdler-maven-plugin打包后的服务模块具体实现类
- * @date 2023年11月15日
- * @email suxuan696@gmail.com
+ * 通过dawdler-maven-plugin打包后的服务模块具体实现类
  */
 public class ServiceBase extends AbstractService {
 

@@ -28,10 +28,7 @@ import io.undertow.servlet.api.ServletStackTraces;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title BaseConfigDeployer.java
- * @Description 基础配置
- * @date 2023年11月18日
- * @email suxuan696@gmail.com
+ * 基础配置
  */
 public class BaseConfigDeployer implements UndertowDeployer {
 

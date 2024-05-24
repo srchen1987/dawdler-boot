@@ -51,10 +51,7 @@ import org.apache.maven.project.MavenProjectHelper;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title RepackageMojo.java
- * @Description repackage打包
- * @date 2023年11月22日
- * @email suxuan696@gmail.com
+ * repackage打包
  */
 @Mojo(name = "repackage", requiresProject = true, requiresDependencyResolution = ResolutionScope.RUNTIME, defaultPhase = LifecyclePhase.PACKAGE)
 public class RepackageMojo extends AbstractMojo {

@@ -100,10 +100,7 @@ import jakarta.servlet.annotation.HandlesTypes;
  * @author jackson.song
  * @version V1.0
  * @param <T>
- * @Title UndertowWebServer.java
- * @Description undertow实现的web服务器
- * @date 2023年11月19日
- * @email suxuan696@gmail.com
+ * undertow实现的web服务器
  */
 public class UndertowWebServer implements WebServer {
 	private static final Logger logger = LoggerFactory.getLogger(UndertowWebServer.class);

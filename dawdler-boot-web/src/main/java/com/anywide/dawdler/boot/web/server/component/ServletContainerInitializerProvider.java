@@ -29,10 +29,7 @@ import jakarta.servlet.ServletContainerInitializer;
 /**
  * @author jackson.song
  * @version V1.0
- * @Title ServletContainerInitializerProvider.java
- * @Description ServletContainerInitializer提供者SPI方式接入
- * @date 2023年11月17日
- * @email suxuan696@gmail.com
+ * ServletContainerInitializer提供者SPI方式接入
  */
 public class ServletContainerInitializerProvider {
 	private final static List<OrderData<ServletContainerInitializer>> SERVLET_CONTAINER_INITIALIZERS = new ArrayList<>();
