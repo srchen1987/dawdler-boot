@@ -18,6 +18,7 @@ package com.anywide.dawdler.boot.web.server.component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventListener;
@@ -74,7 +75,7 @@ public class ServletComponentProvider {
 
 	public void scanComponent(String[] packagePaths,
 			Map<ServletContainerInitializer, ServletContainerInitializerData> servletContainerInitializerMap)
-			throws IOException {
+			throws IOException, URISyntaxException {
 		ClientPlugClassLoader clientPlugClassLoader = ClientPlugClassLoader.newInstance(DawdlerTool.getCurrentPath());
 		Map<String, Resource> removeDuplicates = new LinkedHashMap<>();
 		if (packagePaths != null) {
