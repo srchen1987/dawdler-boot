@@ -121,19 +121,17 @@ public class UndertowWebServer implements WebServer {
 	public void start() throws Throwable {
 		startClass = DawdlerTool.getStartClass();
 		if (started.compareAndSet(false, true)) {
-			YAMLMapper YAMLMapper = YAMLMapperFactory.getYAMLMapper();
+			YAMLMapper yamlMapper = YAMLMapperFactory.getYAMLMapper();
 			InputStream input = startClass.getResourceAsStream("/undertow.yml");
 			if (input != null) {
 				try {
-					undertowConfig = YAMLMapper.readValue(input, UndertowConfig.class);
+					undertowConfig = yamlMapper.readValue(input, UndertowConfig.class);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				} finally {
-					if (input != null) {
-						try {
-							input.close();
-						} catch (IOException e) {
-						}
+					try {
+						input.close();
+					} catch (IOException e) {
 					}
 				}
 			}
@@ -261,7 +259,7 @@ public class UndertowWebServer implements WebServer {
 			return httpHandler;
 		}
 		RequestLargerThanPredicate.Builder builder = new RequestLargerThanPredicate.Builder();
-		Map<String, Object> config = new HashMap<String, Object>();
+		Map<String, Object> config = new HashMap<>();
 		config.put(builder.defaultParameter(), compression.getMinResponseSize());
 		ContentEncodingRepository repository = new ContentEncodingRepository();
 		repository.addEncodingHandler("gzip", new GzipEncodingProvider(), 250,

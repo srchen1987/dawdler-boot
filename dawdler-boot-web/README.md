@@ -2,11 +2,11 @@
 
 ## 模块介绍
 
-嵌入式dawdler-web容器的根模块,提供注解、配置、组件提供者、启动器等功能.一般开发者不需要使用该模块,除非有扩展其他容器的需求比如 jetty、tomcat.
+嵌入式dawdler-web容器的根模块, 提供注解、配置、组件提供者、启动器等功能. 一般开发者不需要使用该模块, 除非有扩展其他容器的需求比如 jetty、tomcat.
 
 ### 1. 配置信息
 
-1、 undertow.yml 目前支持的容器undertow. (未来支持tonmcat,jetty 则为tomcat.yml、jetty.yml)
+1、 undertow.yml 目前支持的容器undertow. (未来支持tomcat, jetty 则为tomcat.yml、jetty.yml)
 
 ```yaml
 
@@ -44,11 +44,11 @@ compression:
 
 2、logback.xml 日志配置文件
 
-3、dawdler.cer 公钥证书 可以采用默认的.如果需要重新制作,请参考[采用keytool制作证书](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-server/README.md#22-采用keytool制作证书)
+3、dawdler.cer 公钥证书 可以采用默认的. 如果需要重新制作, 请参考[采用keytool制作证书](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-server/README.md#22-采用keytool制作证书)
 
 4、dawdler-config.yml 统一配置中心文件 如果采用统一配置中心则需要此配置 [dawdler-config.yml](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-config-center/dawdler-config-center-consul/dawdler-config-center-consul-core/README.md#1-dawdler-configyml配置文件)
 
-5、client-conf.xml [client-conf.xml配置](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-client/README.md#2-client-confxml配置文件说明)、[扫描组件包配置](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-client-plug-web/README.md#11-扫描组件包配置) [远程加载组件](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-client-plug-load/README.md#2-配置需要加载的组件)
+5、client-conf.xml [client-conf.xml配置](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-client/README.md#2-client-confxml配置文件说明)、[扫描组件包配置](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-client-plug-web/README.md#10-扫描组件包配置)、[远程加载组件](https://github.com/srchen1987/dawdler-series/tree/master/dawdler/dawdler-load-plug/dawdler-client-plug-load/README.md#2-配置需要加载的组件)
 
 ### 3. 配置启动服务类
 
@@ -61,9 +61,9 @@ import com.anywide.dawdler.boot.web.starter.DawdlerWebApplication;
 
 @DawdlerBootApplication
 public class UserWebApplication {
-	public static void main(String[] args) throws Throwable {
-		DawdlerWebApplication.run(UserWebApplication.class, args);
-	} 
+ public static void main(String[] args) throws Throwable {
+  DawdlerWebApplication.run(UserWebApplication.class, args);
+ } 
 }
 
 ```
@@ -72,7 +72,7 @@ public class UserWebApplication {
 
 ```shell
 
---add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.web --add-opens=java.base/jdk.internal.loader=dawdler.boot.web --add-opens=java.base/jdk.internal.perf=dawdler.client --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.util --add-opens=java.base/jdk.internal.loader=dawdler.client.plug.web --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=dawdler.core --add-opens=java.base/java.nio=dawdler.core --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=kryo --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/java.lang=cglib
+--add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.web --add-opens=java.base/jdk.internal.loader=dawdler.boot.web --add-opens=java.base/jdk.internal.perf=dawdler.client --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.util --add-opens=java.base/jdk.internal.loader=dawdler.client.plug.web --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=dawdler.core --add-opens=java.base/java.nio=dawdler.core --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=kryo --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED
 
 ```
 
