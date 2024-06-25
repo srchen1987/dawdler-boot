@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.github.dawdler-series</groupId>
 		<artifactId>dawdler</artifactId>
-		<version>21.2-jdk21-RELEASES</version>
+		<version>21.4-jdk21-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot</artifactId>
 	<description>Micro service solutions</description>
@@ -38,6 +38,8 @@
 
 	<packaging>pom</packaging>
 	<properties>
+		<maven.compiler.target>21</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
 		<undertow.version>2.3.10.Final</undertow.version>
 		<undertow-jastow.version>2.2.7.Final</undertow-jastow.version>
 		<jakarta.servlet.jsp.version>3.1.1</jakarta.servlet.jsp.version>

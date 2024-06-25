@@ -71,7 +71,7 @@ public class RepackageMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project.version}", required = true)
 	private String implementationVersion;
 
-	private final static String LOADER_VERSION = "21.2-jdk21-RELEASES";
+	private final static String LOADER_VERSION = "21.4-jdk21-RELEASES";
 
 	@Parameter(defaultValue = "${project.build.finalName}-all.jar", required = true)
 	private String filename;
