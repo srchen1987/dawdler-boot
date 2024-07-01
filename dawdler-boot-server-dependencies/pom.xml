@@ -12,11 +12,11 @@
 	<packaging>pom</packaging>
 	<dependencyManagement>
 		<dependencies>
-		<dependency>
-			<groupId>io.github.dawdler-series</groupId>
-			<artifactId>dawdler-boot-server</artifactId>
-			<version>${dawdler.build.version}</version>
-		</dependency>
-	</dependencies>
+			<dependency>
+				<groupId>io.github.dawdler-series</groupId>
+				<artifactId>dawdler-boot-server</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 </project>
