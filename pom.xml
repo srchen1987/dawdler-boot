@@ -8,6 +8,7 @@
 		<version>1.8.4-jdk1.8-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot</artifactId>
+	<name>dawdler-boot</name>
 	<description>Micro service solutions</description>
 	<url>https://github.com/srchen1987/dawdler-boot</url>
 

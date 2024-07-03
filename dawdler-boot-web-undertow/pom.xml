@@ -8,6 +8,7 @@
 		<version>1.8.4-jdk1.8-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot-web-undertow</artifactId>
+	<name>dawdler-boot-web-undertow</name>
 	<dependencies>
 		<dependency>
 			<groupId>io.github.dawdler-series</groupId>
