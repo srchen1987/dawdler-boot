@@ -8,6 +8,7 @@
 		<version>1.0.2-jdk21-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot</artifactId>
+	<name>dawdler-boot</name>
 	<description>Micro service solutions</description>
 	<url>https://github.com/srchen1987/dawdler-boot</url>
 
@@ -32,7 +33,7 @@
 
 	<scm>
 		<connection>https://github.com/srchen1987/dawdler-boot.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:srchen1987/dawdler-boot.git </developerConnection>
+		<developerConnection>scm:git:ssh://git@github.com:srchen1987/dawdler-boot.git</developerConnection>
 		<url>https://github.com/srchen1987/dawdler-boot</url>
 	</scm>
 
@@ -168,8 +169,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
-					<source>21</source>
-					<target>21</target>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -16,8 +16,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
-					<source>21</source>
-					<target>21</target>
 					<compilerArgs>
 						<arg>--add-exports</arg>
 						<arg>
