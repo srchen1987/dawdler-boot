@@ -6,7 +6,7 @@
 		<groupId>io.github.dawdler-series</groupId>
 		<artifactId>dawdler</artifactId>
 		<version>1.0.6-jdk17-RELEASES</version>
-	</parent>
+	</parent> 
 	<artifactId>dawdler-boot</artifactId>
 	<name>dawdler-boot</name>
 	<description>Micro service solutions</description>
