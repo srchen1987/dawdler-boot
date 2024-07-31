@@ -14,7 +14,7 @@ pom.xml中加入
 			<dependency>
 				<groupId>io.github.dawdler-series</groupId>
 				<artifactId>dawdler-boot-web-dependencies</artifactId>
-				<version>1.0.6-jdk1.8-RELEASES</version>
+				<version>1.0.7-jdk1.8-RELEASES</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
