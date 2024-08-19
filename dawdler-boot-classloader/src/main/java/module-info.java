@@ -5,4 +5,5 @@ module dawdler.boot.classloader {
 	requires jdk.unsupported;
 	
 	exports com.anywide.dawdler.fatjar.loader.launcher;
+	exports com.anywide.dawdler.fatjar.loader.archive.jar;
 }
