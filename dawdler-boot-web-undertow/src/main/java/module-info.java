@@ -16,6 +16,7 @@ module dawdler.boot.web.undertow {
 	requires transitive undertow.core;
 	requires dawdler.util;
 	requires transitive dawdler.boot.web;
+	requires dawdler.boot.classloader;
 	requires transitive undertow.websockets.jsr;
 	requires transitive xnio.api;
 	requires wildfly.common;

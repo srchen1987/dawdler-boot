@@ -19,10 +19,11 @@ package com.anywide.dawdler.boot.web.undertow.resource;
 import java.io.IOException;
 import java.net.URL;
 
+import com.anywide.dawdler.fatjar.loader.archive.jar.NestedJarURLStreamHandler;
+
 import io.undertow.server.handlers.resource.Resource;
 import io.undertow.server.handlers.resource.ResourceChangeListener;
 import io.undertow.server.handlers.resource.ResourceManager;
-import io.undertow.server.handlers.resource.URLResource;
 
 /**
  * @author jackson.song
@@ -39,8 +40,10 @@ public class JarResourceManager implements ResourceManager {
 
 	@Override
 	public Resource getResource(String path) throws IOException {
-		URL url = new URL(this.jarUrl + (path.startsWith("/") ? path : "/" + path));
-		URLResource resource = new URLResource(url, path);
+		String file = this.jarUrl.getFile().replaceAll("jar:", "") + "/" + path;
+		file = file.replace(":////", "://");
+		URL url = new URL("jar", "", -1, file, new NestedJarURLStreamHandler());
+		JarURLResource resource = new JarURLResource(url, path);
 		if (path != null && !"/".equals(path) && resource.getContentLength() < 0) {
 			return null;
 		}
