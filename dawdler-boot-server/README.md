@@ -51,23 +51,17 @@ public class UserServiceApplication {
 ### 4. ide启动参数配置(JPMS jdk17+以上需要)
 
 ```shell
-
---add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.server --add-opens=java.base/jdk.internal.loader=dawdler.boot.server --add-opens=java.base/java.lang=org.aspectj.weaver --add-opens=java.base/jdk.internal.loader=dawdler.server --add-opens=java.base/jdk.internal.perf=dawdler.server --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=dawdler.core --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED
-
+--add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED
 ```
 
 ### 5. 通过dawdler-boot-maven-plugin打包运行方式(JPMS jdk17+以上需要)
 
 ```shell
-
-java --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -p xxx-all.jar -m dawdler.boot.classloader
-
+java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.classloader --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader --add-opens=java.base/jdk.internal.misc=dawdler.boot.classloader -p xxx-all.jar -m dawdler.boot.classloader
 ```
 
 或
 
 ```sh
-
 java --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -jar xxx-all.jar
-
 ```
