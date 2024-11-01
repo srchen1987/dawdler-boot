@@ -323,7 +323,6 @@ public class UndertowWebServer implements WebServer {
 						if (field.getType().isAssignableFrom(Option.class)) {
 							Option option = (Option) field.get(null);
 							try {
-								option.cast(v);
 								builder.setSocketOption(option, v);
 							} catch (Exception e) {
 								throw new IllegalArgumentException("unknown socket-options " + k + " : " + v + " !", e);
