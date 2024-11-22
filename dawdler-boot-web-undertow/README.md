@@ -22,7 +22,6 @@ pom.xml中加入
 undertow.yml 目前支持的容器undertow. (未来支持tonmcat,jetty 则为tomcat.yml、jetty.yml)
 
 ```yaml
-
 undertow:
  #io-threads: #工作线程创建的I/O线程数,默认值源自可用处理器的数量.
  #worker-threads: #工作线程数,默认值是I/O线程数的8倍.
@@ -40,5 +39,4 @@ access-log: #访问日志
  suffix: log #日志后缀
  dir: logs #日志目录
  rotate: true #日志轮替
-
  ```
