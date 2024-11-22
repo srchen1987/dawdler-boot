@@ -71,7 +71,5 @@ public class UserWebApplication {
 ### 4. 通过dawdler-boot-maven-plugin打包运行方式
 
 ```sh
-
 java  -jar xxx-all.jar
-
 ```

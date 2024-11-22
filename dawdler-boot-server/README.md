@@ -53,7 +53,5 @@ public class UserServiceApplication {
 ```shell
 
 ```sh
-
 java -jar xxx-all.jar
-
 ```
