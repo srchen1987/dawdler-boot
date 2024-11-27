@@ -51,7 +51,5 @@ public class UserServiceApplication {
 ### 4. 通过dawdler-boot-maven-plugin打包运行方式
 
 ```shell
-
-```sh
 java -jar xxx-all.jar
 ```
