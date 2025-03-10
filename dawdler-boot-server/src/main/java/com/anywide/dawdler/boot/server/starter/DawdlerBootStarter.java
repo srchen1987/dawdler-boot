@@ -33,18 +33,70 @@ import com.anywide.dawdler.util.DawdlerTool;
  */
 public class DawdlerBootStarter {
 	public static void run(Class<?> startClass, String... args) throws Exception {
+		int port = 0;
+		String portString = null;
+		int shutdownPort = 0;
+		String shutdownPortString = null;
+		if (args != null && args.length > 0) {
+			for (String arg : args) {
+				if (arg.startsWith("--server.port=")) {
+					portString = arg.split("=")[1];
+				}
+				if (arg.startsWith("--shutdown.port=")) {
+					shutdownPortString = arg.split("=")[1];
+				}
+			}
+		}
+		if (portString == null) {
+			portString = System.getProperty("server.port");
+		}
+		if (portString != null) {
+			if (!portString.matches("\\d+")) {
+				throw new IllegalArgumentException("server.port must be a positive integer!");
+			}
+			port = Integer.parseInt(portString);
+			if (port < 1 || port > 65535)
+				throw new IllegalArgumentException("server.port must be between 1 and 65535!");
+		}
+		if (shutdownPortString == null) {
+			shutdownPortString = System.getProperty("shutdown.port");
+		}
+		if (shutdownPortString != null) {
+			if (!shutdownPortString.matches("\\d+")) {
+				throw new IllegalArgumentException("shutdown.port must be a positive integer!");
+			}
+			shutdownPort = Integer.parseInt(shutdownPortString);
+			if (shutdownPort < 1 || shutdownPort > 65535)
+				throw new IllegalArgumentException("shutdown.port must be between 1 and 65535!");
+		}
+
 		InputStream input = startClass.getResourceAsStream("/server-conf.xml");
 		if (input == null) {
 			throw new FileNotFoundException("not found server-conf.xml in classPath!");
 		}
-		ServerConfigParser serverConfigParser = new ServerConfigParser(input);
-		input.close();
-		DawdlerTool.printServerBaseInformation();
+		ServerConfigParser serverConfigParser;
+		try {
+			serverConfigParser = new ServerConfigParser(input);
+		} finally {
+			input.close();
+		}
 		ServerConfig serverConfig = serverConfigParser.getServerConfig();
+		if (port > 0) {
+			serverConfig.getServer().setTcpPort(port);
+		}
+		if (shutdownPort > 0) {
+			serverConfig.getServer().setTcpShutdownPort(shutdownPort);
+		}
+		if (serverConfig.getServer().getTcpPort() == serverConfig.getServer().getTcpShutdownPort()) {
+			throw new IllegalArgumentException("server.port and shutdown.port must be different!");
+		}
+		DawdlerTool.printServerBaseInformation();
 		ServiceRoot serviceRoot = new ServiceRoot(startClass);
-		DawdlerServer dawdlerServer = new DawdlerServer(serverConfig, serviceRoot);
+		DawdlerServer dawdlerServer = new DawdlerServer(serverConfig,
+				serviceRoot);
 		if (Status.UP.equals(serviceRoot.getStatus())) {
 			dawdlerServer.start();
 		}
 	}
+
 }

@@ -54,6 +54,31 @@ public class DawdlerBootStarter {
 			throw new java.lang.IllegalAccessException("can't found any web runtime container!");
 		}
 		WebServer webServer = webServers.get(0);
+
+		int port = 0;
+		String portString = null;
+		if (args != null && args.length > 0) {
+			for (String arg : args) {
+				if (arg.startsWith("--server.port=")) {
+					portString = arg.split("=")[1];
+				}
+			}
+		}
+		if (portString == null) {
+			portString = System.getProperty("server.port");
+		}
+		if (portString != null) {
+			if (!portString.matches("\\d+")) {
+				throw new IllegalArgumentException("server.port must be a positive integer!");
+			}
+			port = Integer.parseInt(portString);
+			if (port < 1 || port > 65535)
+				throw new IllegalArgumentException("server.port must be between 1 and 65535!");
+		}
+
+		if (port > 0) {
+			webServer.setPort(port);
+		}
 		webServer.start();
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
