@@ -16,9 +16,6 @@
  */
 package com.anywide.dawdler.boot.web.starter;
 
-import com.anywide.dawdler.boot.core.loader.DawdlerMainClassLoader;
-import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
-
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -26,6 +23,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.anywide.dawdler.boot.core.loader.DawdlerMainClassLoader;
+import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 
 /**
  * @author jackson.song
@@ -42,7 +42,7 @@ public class DawdlerWebApplication {
 			Thread.currentThread().setContextClassLoader(dawdlerMainClassLoader);
 			Method mainMethod = mainClass.getDeclaredMethod("run", Class.class, String[].class);
 			mainMethod.setAccessible(true);
-			mainMethod.invoke(null, new Object[]{startClass, args});
+			mainMethod.invoke(null, new Object[] { startClass, args });
 		} else {
 			DawdlerBootStarter.run(startClass, args);
 		}
@@ -50,12 +50,18 @@ public class DawdlerWebApplication {
 
 	public static URL[] getURL() {
 		List<URL> urls = new ArrayList<URL>(64);
-
+		String javaHome = System.getProperty("java.home");
 		Optional<Object> optionalClassPath = Optional.ofNullable(System.getProperties().get("java.class.path"));
 		optionalClassPath.ifPresent(paths -> {
 			for (String path : paths.toString().split(File.pathSeparator)) {
 				try {
-					urls.add(new File(path).toURI().toURL());
+					if (javaHome != null) {
+						if (!path.startsWith(javaHome)) {
+							urls.add(new File(path).toURI().toURL());
+						}
+					} else {
+						urls.add(new File(path).toURI().toURL());
+					}
 				} catch (MalformedURLException e) {
 				}
 			}
