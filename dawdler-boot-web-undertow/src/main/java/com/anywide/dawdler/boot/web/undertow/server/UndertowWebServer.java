@@ -157,7 +157,9 @@ public class UndertowWebServer implements WebServer {
 			}
 			boolean useWebsocket = !scanServletComponent.getEndPointList().isEmpty();
 			Server server = undertowConfig.getServer();
-			port = server.getPort();
+			if(port == null) {
+				port = server.getPort();
+			}
 			DeploymentInfo deployment = Servlets.deployment();
 			deployment.setClassLoader(Thread.currentThread().getContextClassLoader());
 			addServletContainerInitializers(deployment, servletContainerInitializerMap);
@@ -425,6 +427,11 @@ public class UndertowWebServer implements WebServer {
 	@Override
 	public int getPort() {
 		return port;
+	}
+
+	@Override
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 }
