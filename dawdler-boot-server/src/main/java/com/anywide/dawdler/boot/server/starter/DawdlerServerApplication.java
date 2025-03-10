@@ -52,12 +52,18 @@ public class DawdlerServerApplication {
 
 	public static URL[] getURL() {
 		List<URL> urls = new ArrayList<URL>(64);
-
+		String javaHome = System.getProperty("java.home");
 		Optional<Object> optionalClassPath = Optional.ofNullable(System.getProperties().get("java.class.path"));
 		optionalClassPath.ifPresent(paths -> {
 			for (String path : paths.toString().split(File.pathSeparator)) {
 				try {
-					urls.add(new File(path).toURI().toURL());
+					if (javaHome != null) {
+						if (!path.startsWith(javaHome)) {
+							urls.add(new File(path).toURI().toURL());
+						}
+					} else {
+						urls.add(new File(path).toURI().toURL());
+					}
 				} catch (MalformedURLException e) {
 				}
 			}
