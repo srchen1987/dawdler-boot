@@ -73,3 +73,19 @@ public class UserWebApplication {
 ```sh
 java  -jar xxx-all.jar
 ```
+
+### 5. 运行时指定端口号
+
+启动参数指定优先于虚拟机系统属性指定.
+
+#### 5.1 启动参数指定
+
+```shell
+--server.port=8081
+```
+
+#### 5.2 虚拟机系统属性指定
+
+```shell
+-Dserver.port=8081
+```
