@@ -53,3 +53,31 @@ public class UserServiceApplication {
 ```shell
 java -jar xxx-all.jar
 ```
+
+### 5. 运行时指定端口号
+
+启动参数指定优先于虚拟机系统属性指定.
+
+#### 5.1 启动参数指定服务端口号
+
+```shell
+--server.port=9527
+```
+
+#### 5.2 虚拟机系统属性指定服务端口号
+
+```shell
+-Dserver.port=9527
+```
+
+#### 5.3 启动参数指定关闭服务端口号
+
+```shell
+--shutdown.port=19527
+```
+
+#### 5.4 虚拟机系统属性指定关闭服务端口号
+
+```shell
+-Dshutdown.port=19527
+```
