@@ -16,9 +16,6 @@
  */
 package com.anywide.dawdler.boot.web.starter;
 
-import java.lang.reflect.Field;
-import java.util.List;
-
 import com.anywide.dawdler.boot.core.loader.DawdlerDeployClassLoader;
 import com.anywide.dawdler.boot.core.loader.DawdlerProjectClassLoader;
 import com.anywide.dawdler.boot.web.server.WebServer;
@@ -26,6 +23,9 @@ import com.anywide.dawdler.boot.web.server.WebServerProvider;
 import com.anywide.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 import com.anywide.dawdler.util.DawdlerTool;
 import com.anywide.dawdler.util.JVMTimeProvider;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * @author jackson.song
@@ -40,10 +40,12 @@ public class DawdlerBootStarter {
 		field.setAccessible(true);
 		field.set(null, startClass);
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		if (classLoader instanceof LaunchedURLClassLoader launchedURLClassLoader) {
-			DawdlerDeployClassLoader dawdlerDeployClassLoader = new DawdlerDeployClassLoader(launchedURLClassLoader, null);
+		if (classLoader instanceof LaunchedURLClassLoader) {
+			LaunchedURLClassLoader launchedURLClassLoader = (LaunchedURLClassLoader) classLoader;
+			DawdlerDeployClassLoader dawdlerDeployClassLoader = new DawdlerDeployClassLoader(launchedURLClassLoader,
+					null);
 			Thread.currentThread().setContextClassLoader(dawdlerDeployClassLoader);
-		}else {
+		} else {
 			DawdlerProjectClassLoader dawdlerProjectClassLoader = new DawdlerProjectClassLoader(classLoader);
 			Thread.currentThread().setContextClassLoader(dawdlerProjectClassLoader);
 		}
@@ -52,6 +54,31 @@ public class DawdlerBootStarter {
 			throw new java.lang.IllegalAccessException("can't found any web runtime container!");
 		}
 		WebServer webServer = webServers.get(0);
+
+		int port = 0;
+		String portString = null;
+		if (args != null && args.length > 0) {
+			for (String arg : args) {
+				if (arg.startsWith("--server.port=")) {
+					portString = arg.split("=")[1];
+				}
+			}
+		}
+		if (portString == null) {
+			portString = System.getProperty("server.port");
+		}
+		if (portString != null) {
+			if (!portString.matches("\\d+")) {
+				throw new IllegalArgumentException("server.port must be a positive integer!");
+			}
+			port = Integer.parseInt(portString);
+			if (port < 1 || port > 65535)
+				throw new IllegalArgumentException("server.port must be between 1 and 65535!");
+		}
+
+		if (port > 0) {
+			webServer.setPort(port);
+		}
 		webServer.start();
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override

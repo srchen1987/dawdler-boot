@@ -65,3 +65,31 @@ java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.intern
 ```sh
 java --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -jar xxx-all.jar
 ```
+
+### 6. 运行时指定端口号
+
+启动参数指定优先于虚拟机系统属性指定.
+
+#### 6.1 启动参数指定服务端口号
+
+```shell
+--server.port=9527
+```
+
+#### 6.2 虚拟机系统属性指定服务端口号
+
+```shell
+-Dserver.port=9527
+```
+
+#### 6.3 启动参数指定关闭服务端口号
+
+```shell
+--shutdown.port=19527
+```
+
+#### 6.4 虚拟机系统属性指定关闭服务端口号
+
+```shell
+-Dshutdown.port=19527
+```
