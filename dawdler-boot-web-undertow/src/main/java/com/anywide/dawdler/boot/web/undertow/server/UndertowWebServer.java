@@ -160,10 +160,12 @@ public class UndertowWebServer implements WebServer {
 			}
 			boolean useWebsocket = !scanServletComponent.getEndPointList().isEmpty();
 			Server server = undertowConfig.getServer();
-			port = server.getPort();
+			if (port == null) {
+				port = server.getPort();
+			}
 			Boolean virtualThread = undertowConfig.getUndertow().getVirtualThread();
 			DeploymentInfo deployment = Servlets.deployment();
-			if(virtualThread !=null && virtualThread) {
+			if (virtualThread != null && virtualThread) {
 				ThreadFactory factory = Thread.ofVirtual().name("undertow-virtual-executor@", 1).factory();
 				deployment.setExecutor(Executors.newThreadPerTaskExecutor(factory));
 			}
@@ -432,6 +434,11 @@ public class UndertowWebServer implements WebServer {
 	@Override
 	public int getPort() {
 		return port;
+	}
+
+	@Override
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 }

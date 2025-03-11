@@ -29,4 +29,6 @@ public interface WebServer {
 
 	int getPort();
 
+	void setPort(int port);
+
 }
