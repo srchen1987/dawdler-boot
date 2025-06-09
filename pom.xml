@@ -11,14 +11,12 @@
 	<name>dawdler-boot</name>
 	<description>Micro service solutions</description>
 	<url>https://github.com/srchen1987/dawdler-boot</url>
-
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
-
 	<developers>
 		<developer>
 			<id>srchen1987</id>
@@ -30,20 +28,19 @@
 			</roles>
 		</developer>
 	</developers>
-
 	<scm>
 		<connection>https://github.com/srchen1987/dawdler-boot.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:srchen1987/dawdler-boot.git </developerConnection>
 		<url>https://github.com/srchen1987/dawdler-boot</url>
 	</scm>
-
 	<packaging>pom</packaging>
 	<properties>
 		<undertow.version>1.4.28.Final</undertow.version>
 		<undertow-jastow.version>1.1.1.Final</undertow-jastow.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
-		<org.eclipse.jdt.ect.version>3.32.0</org.eclipse.jdt.ect.version>
+		<org.eclipse.jdt.ect.version>3.24.0</org.eclipse.jdt.ect.version>
 		<org.glassfish.expressly.version>5.0.0</org.glassfish.expressly.version>
+		<org.apache.tomcat.jasper.el.version>9.0.75</org.apache.tomcat.jasper.el.version>
 		<org.apache.maven.version>3.9.6</org.apache.maven.version>
 		<org.apache.maven.maven-project.version>2.2.1</org.apache.maven.maven-project.version>
 		<maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
@@ -119,9 +116,9 @@
 				<version>${org.eclipse.jdt.ect.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.glassfish.expressly</groupId>
-				<artifactId>expressly</artifactId>
-				<version>${org.glassfish.expressly.version}</version>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-jasper-el</artifactId>
+				<version>${org.apache.tomcat.jasper.el.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
