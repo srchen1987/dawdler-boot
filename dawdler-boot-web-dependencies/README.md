@@ -14,7 +14,7 @@ pom.xml中加入
 			<dependency>
 				<groupId>club.dawdler</groupId>
 				<artifactId>dawdler-boot-web-dependencies</artifactId>
-				<version>0.0.9-jdk1.8-RELEASES</version>
+				<version>0.1.0-jdk1.8-RELEASES</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

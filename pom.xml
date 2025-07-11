@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>club.dawdler</groupId>
 		<artifactId>dawdler</artifactId>
-		<version>0.0.9-jdk1.8-RELEASES</version>
+		<version>0.1.0-jdk1.8-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot</artifactId>
 	<name>dawdler-boot</name>
@@ -43,9 +43,9 @@
 		<org.apache.tomcat.jasper.el.version>9.0.75</org.apache.tomcat.jasper.el.version>
 		<org.apache.maven.version>3.9.6</org.apache.maven.version>
 		<org.apache.maven.maven-project.version>2.2.1</org.apache.maven.maven-project.version>
-		<maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-		<maven-plugin-annotations.version>3.10.2</maven-plugin-annotations.version>
-		<maven-plugin-plugin.version>3.10.2</maven-plugin-plugin.version>
+		<maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
+		<maven-plugin-annotations.version>3.14.0</maven-plugin-annotations.version>
+		<maven-plugin-plugin.version>3.14.0</maven-plugin-plugin.version>
 	</properties>
 	<modules>
 		<module>dawdler-boot-server-dependencies</module>
@@ -179,6 +179,18 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<!-- <plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>12.1.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
 		</plugins>
 		<defaultGoal>compile</defaultGoal>
 	</build>
