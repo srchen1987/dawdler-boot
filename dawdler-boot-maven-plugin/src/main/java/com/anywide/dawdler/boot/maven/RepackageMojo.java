@@ -190,7 +190,6 @@ public class RepackageMojo extends AbstractMojo {
 	}
 
 	private void addToZip(File sourceFile, String zipfilePath, JarOutputStream out) throws IOException {
-		System.out.println(sourceFile);
 		String fileName = sourceFile.getName();
 		if (fileName.contains("dawdler-boot-classloader") && !fileName.contains("dawdler-boot-classloader-core")) {
 			return;
