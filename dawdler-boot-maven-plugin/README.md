@@ -12,7 +12,7 @@ pom.xml中加入
 			<plugin>
 				<groupId>club.dawdler</groupId>
 				<artifactId>dawdler-boot-maven-plugin</artifactId>
-				<version>0.1.0-jdk21-RELEASES</version>
+				<version>0.1.1-jdk21-RELEASES</version>
 				<executions>
 					<execution>
 						<goals>
