@@ -190,7 +190,12 @@ public class RepackageMojo extends AbstractMojo {
 	}
 
 	private void addToZip(File sourceFile, String zipfilePath, JarOutputStream out) throws IOException {
-		ZipEntry zip = new ZipEntry(zipfilePath + sourceFile.getName());
+		System.out.println(sourceFile);
+		String fileName = sourceFile.getName();
+		if (fileName.contains("dawdler-boot-classloader") && !fileName.contains("dawdler-boot-classloader-core")) {
+			return;
+		}
+		ZipEntry zip = new ZipEntry(zipfilePath + fileName);
 		zip.setMethod(ZipEntry.STORED);
 		CRC32 crc = new CRC32();
 		zip.setSize(sourceFile.length());
