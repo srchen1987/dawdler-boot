@@ -71,7 +71,7 @@ public class RepackageMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project.version}", required = true)
 	private String implementationVersion;
 
-	private static final String LOADER_VERSION = "0.0.9-jdk17-RELEASES";
+	private static final String LOADER_VERSION = "0.1.0-jdk17-RELEASES";
 
 	@Parameter(defaultValue = "${project.build.finalName}-all.jar", required = true)
 	private String filename;
@@ -190,7 +190,11 @@ public class RepackageMojo extends AbstractMojo {
 	}
 
 	private void addToZip(File sourceFile, String zipfilePath, JarOutputStream out) throws IOException {
-		ZipEntry zip = new ZipEntry(zipfilePath + sourceFile.getName());
+		String fileName = sourceFile.getName();
+		if (fileName.contains("dawdler-boot-classloader") && !fileName.contains("dawdler-boot-classloader-core")) {
+			return;
+		}
+		ZipEntry zip = new ZipEntry(zipfilePath + fileName);
 		zip.setMethod(ZipEntry.STORED);
 		CRC32 crc = new CRC32();
 		zip.setSize(sourceFile.length());
