@@ -36,8 +36,8 @@ pom.xml中加入
 ```java
 package com.dawdler.user.application;
 
-import com.anywide.dawdler.boot.server.annotation.DawdlerBootApplication;
-import com.anywide.dawdler.boot.server.starter.DawdlerServerApplication;
+import club.dawdler.boot.server.annotation.DawdlerBootApplication;
+import club.dawdler.boot.server.starter.DawdlerServerApplication;
 @DawdlerBootApplication(serviceName = "user-service") // 服务名
 public class UserServiceApplication {
 	public static void main(String[] args) throws Exception {

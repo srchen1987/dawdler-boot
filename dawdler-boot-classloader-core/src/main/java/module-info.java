@@ -6,5 +6,5 @@ module dawdler.boot.classloader.core {
 	requires dawdler.core;
 	requires dawdler.boot.classloader;
 
-	exports com.anywide.dawdler.boot.core.loader;
+	exports club.dawdler.boot.core.loader;
 }
