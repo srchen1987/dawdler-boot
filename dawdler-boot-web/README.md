@@ -56,8 +56,8 @@ compression:
 
 package com.dawdler.user.application;
 
-import com.anywide.dawdler.boot.web.annotation.DawdlerBootApplication;
-import com.anywide.dawdler.boot.web.starter.DawdlerWebApplication;
+import club.dawdler.boot.web.annotation.DawdlerBootApplication;
+import club.dawdler.boot.web.starter.DawdlerWebApplication;
 
 @DawdlerBootApplication
 public class UserWebApplication {
