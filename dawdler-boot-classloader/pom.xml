@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>club.dawdler</groupId>
 		<artifactId>dawdler-boot</artifactId>
-		<version>0.1.1-jdk17-RELEASES</version>
+		<version>0.1.2-jdk17-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot-classloader</artifactId>
 	<name>dawdler-boot-classloader</name>
@@ -40,7 +40,7 @@
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>
-								com.anywide.dawdler.fatjar.loader.launcher.JarLauncher</mainClass>
+								club.dawdler.fatjar.loader.launcher.JarLauncher</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

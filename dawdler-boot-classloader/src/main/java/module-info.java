@@ -4,6 +4,6 @@ module dawdler.boot.classloader {
 	requires jdk.httpserver;
 	requires jdk.unsupported;
 	
-	exports com.anywide.dawdler.fatjar.loader.launcher;
-	exports com.anywide.dawdler.fatjar.loader.archive.jar;
+	exports club.dawdler.fatjar.loader.launcher;
+	exports club.dawdler.fatjar.loader.archive.jar;
 }

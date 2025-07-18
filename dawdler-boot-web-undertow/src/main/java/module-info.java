@@ -1,13 +1,13 @@
-import com.anywide.dawdler.boot.web.server.WebServer;
-import com.anywide.dawdler.boot.web.undertow.deployment.BaseConfigDeployer;
-import com.anywide.dawdler.boot.web.undertow.deployment.ErrorPagesDeployer;
-import com.anywide.dawdler.boot.web.undertow.deployment.FilterDeployer;
-import com.anywide.dawdler.boot.web.undertow.deployment.ListenerDeployer;
-import com.anywide.dawdler.boot.web.undertow.deployment.ServletDeployer;
-import com.anywide.dawdler.boot.web.undertow.deployment.StaticResourceDeployer;
-import com.anywide.dawdler.boot.web.undertow.deployment.UndertowDeployer;
-import com.anywide.dawdler.boot.web.undertow.deployment.WebSocketDeployer;
-import com.anywide.dawdler.boot.web.undertow.server.UndertowWebServer;
+import club.dawdler.boot.web.server.WebServer;
+import club.dawdler.boot.web.undertow.deployment.BaseConfigDeployer;
+import club.dawdler.boot.web.undertow.deployment.ErrorPagesDeployer;
+import club.dawdler.boot.web.undertow.deployment.FilterDeployer;
+import club.dawdler.boot.web.undertow.deployment.ListenerDeployer;
+import club.dawdler.boot.web.undertow.deployment.ServletDeployer;
+import club.dawdler.boot.web.undertow.deployment.StaticResourceDeployer;
+import club.dawdler.boot.web.undertow.deployment.UndertowDeployer;
+import club.dawdler.boot.web.undertow.deployment.WebSocketDeployer;
+import club.dawdler.boot.web.undertow.server.UndertowWebServer;
 
 module dawdler.boot.web.undertow {
 	requires java.base;
@@ -26,11 +26,11 @@ module dawdler.boot.web.undertow {
 	requires transitive dawdler.core;
 	requires transitive undertow.servlet;
 
-	opens com.anywide.dawdler.boot.web.undertow.error to dawdler.boot.web;
-	opens com.anywide.dawdler.boot.web.undertow.config;
+	opens club.dawdler.boot.web.undertow.error to dawdler.boot.web;
+	opens club.dawdler.boot.web.undertow.config;
 
-	exports com.anywide.dawdler.boot.web.undertow.config;
-	exports com.anywide.dawdler.boot.web.undertow.deployment;
+	exports club.dawdler.boot.web.undertow.config;
+	exports club.dawdler.boot.web.undertow.deployment;
 
 	uses WebServer;
 

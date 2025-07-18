@@ -10,15 +10,15 @@ module dawdler.boot.web {
 	requires dawdler.boot.classloader;
 	requires dawdler.boot.classloader.core;
 
-	exports com.anywide.dawdler.boot.web.annotation;
-	exports com.anywide.dawdler.boot.web.starter;
-	exports com.anywide.dawdler.boot.web.server;
-	exports com.anywide.dawdler.boot.web.config;
-	exports com.anywide.dawdler.boot.web.server.component;
+	exports club.dawdler.boot.web.annotation;
+	exports club.dawdler.boot.web.starter;
+	exports club.dawdler.boot.web.server;
+	exports club.dawdler.boot.web.config;
+	exports club.dawdler.boot.web.server.component;
 
-	opens com.anywide.dawdler.boot.web.config;
+	opens club.dawdler.boot.web.config;
 
-	uses com.anywide.dawdler.boot.web.server.WebServer;
+	uses club.dawdler.boot.web.server.WebServer;
 
 	uses jakarta.servlet.ServletContainerInitializer;
 }

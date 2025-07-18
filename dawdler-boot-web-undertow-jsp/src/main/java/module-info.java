@@ -1,5 +1,5 @@
-import com.anywide.dawdler.boot.web.undertow.deployment.UndertowDeployer;
-import com.anywide.dawdler.boot.web.undertow.jsp.deployment.JspDeployer;
+import club.dawdler.boot.web.undertow.deployment.UndertowDeployer;
+import club.dawdler.boot.web.undertow.jsp.deployment.JspDeployer;
 
 module dawdler.boot.web.undertow.jsp {
 	requires jastow;
