@@ -71,8 +71,6 @@ public class RepackageMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project.version}", required = true)
 	private String implementationVersion;
 
-	private static final String LOADER_VERSION = "0.1.2-jdk17-RELEASES";
-
 	@Parameter(defaultValue = "${project.build.finalName}-all.jar", required = true)
 	private String filename;
 
@@ -88,13 +86,18 @@ public class RepackageMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project.build.outputDirectory}", required = true)
 	private File classesDirectory;
 
+	@Parameter(defaultValue = "${project.packaging}", readonly = true)
+	private String packaging;
+
 	@Component
 	private MavenProjectHelper projectHelper;
 
 	private String mainClass;
 
 	public void execute() throws MojoExecutionException {
-
+		if (packaging == null || !packaging.equals("jar")) {
+			return;
+		}
 		displayPluginInfo();
 
 		JarOutputStream out = null;
@@ -156,7 +159,7 @@ public class RepackageMojo extends AbstractMojo {
 	}
 
 	private String getOnejarArchiveName() {
-		return "dawdler-boot-classloader-" + LOADER_VERSION + ".jar";
+		return "dawdler-boot-classloader-" + project.getProperties().getProperty("dawdler.build.version") + ".jar";
 	}
 
 	private JarInputStream openDawdlerBootTemplateArchive() throws IOException {

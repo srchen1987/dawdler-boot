@@ -9,18 +9,18 @@
 pom.xml中加入
 
 ```xml
-			<plugin>
-				<groupId>club.dawdler</groupId>
-				<artifactId>dawdler-boot-maven-plugin</artifactId>
-				<version>0.1.2-jdk17-RELEASES</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+	<plugin>
+		<groupId>club.dawdler</groupId>
+		<artifactId>dawdler-boot-maven-plugin</artifactId>
+		<version>0.1.3-jdk17-RELEASES</version>
+		<executions>
+			<execution>
+				<goals>
+					<goal>repackage</goal>
+				</goals>
+			</execution>
+		</executions>
+	</plugin>
 ```
 
 mvn install 即可获取xxx-all.jar.
