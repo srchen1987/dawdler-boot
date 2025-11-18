@@ -9,17 +9,17 @@
 pom.xml中加入
 
 ```xml
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>club.dawdler</groupId>
-				<artifactId>dawdler-boot-web-dependencies</artifactId>
-				<version>0.1.3-jdk1.8-RELEASES</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>club.dawdler</groupId>
+                <artifactId>dawdler-boot-web-dependencies</artifactId>
+                <version>0.1.3-jdk1.8-RELEASES</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 ```
 
 经过以上配置即可使用dawdler统一管理的组件及其三方组件的jar.
