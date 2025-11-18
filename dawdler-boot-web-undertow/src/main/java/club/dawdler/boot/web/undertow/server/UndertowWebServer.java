@@ -44,6 +44,8 @@ import org.xnio.Options;
 import org.xnio.Xnio;
 import org.xnio.XnioWorker;
 
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+
 import club.dawdler.boot.web.config.WebServerConfig.Compression;
 import club.dawdler.boot.web.config.WebServerConfig.Server;
 import club.dawdler.boot.web.server.WebServer;
@@ -53,6 +55,7 @@ import club.dawdler.boot.web.server.component.ServletContainerInitializerProvide
 import club.dawdler.boot.web.undertow.compression.CompressibleMimeTypePredicate;
 import club.dawdler.boot.web.undertow.config.UndertowConfig;
 import club.dawdler.boot.web.undertow.config.UndertowConfig.AccessLog;
+import club.dawdler.boot.web.undertow.config.UndertowConfig.WebSocketByteBufferPool;
 import club.dawdler.boot.web.undertow.deployment.UndertowDeployer;
 import club.dawdler.boot.web.undertow.deployment.UndertowDeployerProvider;
 import club.dawdler.boot.web.undertow.error.UndertowExceptionHandler;
@@ -62,14 +65,13 @@ import club.dawdler.core.order.OrderData;
 import club.dawdler.core.shutdown.ContainerGracefulShutdown;
 import club.dawdler.util.DawdlerTool;
 import club.dawdler.util.YAMLMapperFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.UndertowOptions;
 import io.undertow.predicate.Predicates;
 import io.undertow.predicate.RequestLargerThanPredicate;
+import io.undertow.server.DefaultByteBufferPool;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.GracefulShutdownHandler;
 import io.undertow.server.handlers.GracefulShutdownHandler.ShutdownListener;
@@ -89,7 +91,7 @@ import io.undertow.servlet.core.ApplicationListeners;
 import io.undertow.servlet.core.ManagedFilter;
 import io.undertow.servlet.core.ManagedListener;
 import io.undertow.servlet.util.ImmediateInstanceFactory;
-import io.undertow.websockets.jsr.Bootstrap;
+import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletContainerInitializer;
 import jakarta.servlet.ServletContext;
@@ -104,11 +106,11 @@ import jakarta.servlet.annotation.HandlesTypes;
  */
 public class UndertowWebServer implements WebServer {
 	private static final Logger logger = LoggerFactory.getLogger(UndertowWebServer.class);
-	private AtomicBoolean started = new AtomicBoolean();
+	private final AtomicBoolean started = new AtomicBoolean();
 	private Undertow undertow;
 	private Class<?> startClass;
 	private UndertowConfig undertowConfig;
-	private ServletComponentProvider scanServletComponent = ServletComponentProvider.getInstance();
+	private final ServletComponentProvider scanServletComponent = ServletComponentProvider.getInstance();
 	private final List<OrderData<RemoteClassLoaderFire>> fireList = RemoteClassLoaderFireHolder.getInstance()
 			.getRemoteClassLoaderFire();
 	private Integer port;
@@ -131,12 +133,10 @@ public class UndertowWebServer implements WebServer {
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				} finally {
-					if (input != null) {
 						try {
 							input.close();
 						} catch (IOException e) {
 						}
-					}
 				}
 			}
 			if (undertowConfig == null) {
@@ -158,7 +158,6 @@ public class UndertowWebServer implements WebServer {
 				scanServletComponent.scanComponent(undertowConfig.getComponentPackagePaths(),
 						servletContainerInitializerMap);
 			}
-			boolean useWebsocket = !scanServletComponent.getEndPointList().isEmpty();
 			Server server = undertowConfig.getServer();
 			if (port == null) {
 				port = server.getPort();
@@ -177,7 +176,17 @@ public class UndertowWebServer implements WebServer {
 				orderData.getData().deploy(undertowConfig, deployment);
 			}
 			manager = container.addDeployment(deployment);
+			WebSocketDeploymentInfo info = (WebSocketDeploymentInfo) deployment.getServletContextAttributes()
+					.get(WebSocketDeploymentInfo.ATTRIBUTE_NAME);
+			if (info != null) {
+				WebSocketByteBufferPool webSocketByteBufferPool = undertowConfig.getWebSocketByteBufferPool();
+				info.setBuffers(new DefaultByteBufferPool(webSocketByteBufferPool.isDirect(),
+						webSocketByteBufferPool.getBufferSize(),
+						webSocketByteBufferPool.getMaximumPoolSize(), webSocketByteBufferPool.getThreadLocalCacheSize(),
+						webSocketByteBufferPool.getLeakDecetionPercent()));
+			}
 			manager.deploy();
+			servletContext = manager.getDeployment().getServletContext();
 			HttpHandler httpHandler = manager.start();
 			httpHandler = setGracefulShutdownHandler(httpHandler);
 			httpHandler = setAccessLogHandler(httpHandler);
@@ -193,15 +202,10 @@ public class UndertowWebServer implements WebServer {
 			}
 			builder.setHandler(servletPath);
 			bindServer(builder);
-			undertow = builder.build();
 			injectServlet(manager);
 			injectFilter(manager);
 			injectLister(manager);
-			servletContext = manager.getDeployment().getServletContext();
-			if (useWebsocket) {
-				Bootstrap bootstrap = new Bootstrap();
-				bootstrap.handleDeployment(deployment, servletContext);
-			}
+			undertow = builder.build();
 			undertow.start();
 		}
 	}

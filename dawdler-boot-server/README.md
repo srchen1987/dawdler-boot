@@ -9,12 +9,12 @@
 pom.xml中加入
 
 ```xml
-	<dependencies>
-		<dependency>
-			<groupId>club.dawdler</groupId>
-			<artifactId>dawdler-boot-server</artifactId>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>club.dawdler</groupId>
+            <artifactId>dawdler-boot-server</artifactId>
+        </dependency>
+    </dependencies>
 ```
 
 ### 2. 配置文件
@@ -40,9 +40,9 @@ import club.dawdler.boot.server.annotation.DawdlerBootApplication;
 import club.dawdler.boot.server.starter.DawdlerServerApplication;
 @DawdlerBootApplication(serviceName = "user-service") // 服务名
 public class UserServiceApplication {
-	public static void main(String[] args) throws Exception {
-			DawdlerServerApplication.run(UserServiceApplication.class, args);
-	}
+    public static void main(String[] args) throws Exception {
+            DawdlerServerApplication.run(UserServiceApplication.class, args);
+    }
 }
 ```
 

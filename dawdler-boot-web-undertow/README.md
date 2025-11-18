@@ -9,17 +9,17 @@
 pom.xml中加入
 
 ```xml
-	<dependencies>
-		<dependency>
-			<groupId>club.dawdler</groupId>
-			<artifactId>dawdler-boot-web-undertow</artifactId>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>club.dawdler</groupId>
+            <artifactId>dawdler-boot-web-undertow</artifactId>
+        </dependency>
+    </dependencies>
 ```
 
 ### 2. 配置信息
 
-undertow.yml 目前支持的容器undertow. (未来支持tonmcat,jetty 则为tomcat.yml、jetty.yml)
+undertow.yml 目前支持的容器undertow. (未来支持tomcat,jetty 则为tomcat.yml、jetty.yml)
 
 ```yaml
 undertow:
@@ -31,6 +31,13 @@ undertow:
  #undertow-options: #undertow下的配置,一般不需要配置,如需自定义配置请具体参考UndertowOptions.java
   #max_headers: 200 #最大header请求个数 
  #socket-options: #socket配置项 一般不需要配置采用默认即可,如需自定义配置请具体参考org.xnio.Options.java
+
+web-socket-byte-buffer-pool:
+ #direct: false
+ #buffer-size: 2048
+ #maximum-pool-size: -1
+ #thread-local-cache-size = 12
+ #leak-detection-percent = 0
 
 access-log: #访问日志
  enabled: false #是否开启accesslog
