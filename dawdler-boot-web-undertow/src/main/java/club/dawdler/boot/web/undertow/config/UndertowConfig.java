@@ -19,8 +19,9 @@ package club.dawdler.boot.web.undertow.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import club.dawdler.boot.web.config.WebServerConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import club.dawdler.boot.web.config.WebServerConfig;
 
 /**
  * @author jackson.song
@@ -33,6 +34,9 @@ public class UndertowConfig extends WebServerConfig {
 
 	@JsonProperty("access-log")
 	private AccessLog accessLog;
+
+	@JsonProperty("web-socket-byte-buffer-pool")
+	private WebSocketByteBufferPool webSocketByteBufferPool = new WebSocketByteBufferPool();
 
 	public Undertow getUndertow() {
 		return undertow;
@@ -48,6 +52,14 @@ public class UndertowConfig extends WebServerConfig {
 
 	public void setAccessLog(AccessLog accessLog) {
 		this.accessLog = accessLog;
+	}
+
+	public WebSocketByteBufferPool getWebSocketByteBufferPool() {
+		return webSocketByteBufferPool;
+	}
+
+	public void setWebSocketByteBufferPool(WebSocketByteBufferPool webSocketByteBufferPool) {
+		this.webSocketByteBufferPool = webSocketByteBufferPool;
 	}
 
 	public static class Undertow {
@@ -189,6 +201,59 @@ public class UndertowConfig extends WebServerConfig {
 
 		public void setRotate(boolean rotate) {
 			this.rotate = rotate;
+		}
+
+	}
+
+	public static class WebSocketByteBufferPool {
+		private boolean direct;
+		@JsonProperty("buffer-size")
+		private int bufferSize = 2048;
+		@JsonProperty("maximum-pool-size")
+		private int maximumPoolSize = -1;
+		@JsonProperty("thread-local-cache-size")
+		private int threadLocalCacheSize = 12;
+		@JsonProperty("leak-detection-percent")
+		private int leakDecetionPercent = 0;
+
+		public boolean isDirect() {
+			return direct;
+		}
+
+		public void setDirect(boolean direct) {
+			this.direct = direct;
+		}
+
+		public int getBufferSize() {
+			return bufferSize;
+		}
+
+		public void setBufferSize(int bufferSize) {
+			this.bufferSize = bufferSize;
+		}
+
+		public int getMaximumPoolSize() {
+			return maximumPoolSize;
+		}
+
+		public void setMaximumPoolSize(int maximumPoolSize) {
+			this.maximumPoolSize = maximumPoolSize;
+		}
+
+		public int getThreadLocalCacheSize() {
+			return threadLocalCacheSize;
+		}
+
+		public void setThreadLocalCacheSize(int threadLocalCacheSize) {
+			this.threadLocalCacheSize = threadLocalCacheSize;
+		}
+
+		public int getLeakDecetionPercent() {
+			return leakDecetionPercent;
+		}
+
+		public void setLeakDecetionPercent(int leakDecetionPercent) {
+			this.leakDecetionPercent = leakDecetionPercent;
 		}
 
 	}

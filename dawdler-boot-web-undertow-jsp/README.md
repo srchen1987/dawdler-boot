@@ -9,12 +9,12 @@
 pom.xml中加入
 
 ```xml
-	<dependencies>
-		<dependency>
-			<groupId>club.dawdler</groupId>
-			<artifactId>dawdler-boot-web-undertow-jsp</artifactId>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>club.dawdler</groupId>
+            <artifactId>dawdler-boot-web-undertow-jsp</artifactId>
+        </dependency>
+    </dependencies>
 ```
 
 ### 2. 配置信息

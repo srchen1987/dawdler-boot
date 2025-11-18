@@ -9,20 +9,19 @@
 pom.xml中加入
 
 ```xml
-	<dependencies>
-		<dependency>
-			<groupId>club.dawdler</groupId>
-			<artifactId>dawdler-boot-web-undertow</artifactId>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>club.dawdler</groupId>
+            <artifactId>dawdler-boot-web-undertow</artifactId>
+        </dependency>
+    </dependencies>
 ```
 
 ### 2. 配置信息
 
-undertow.yml 目前支持的容器undertow. (未来支持tonmcat,jetty 则为tomcat.yml、jetty.yml)
+undertow.yml 目前支持的容器undertow. (未来支持tomcat,jetty 则为tomcat.yml、jetty.yml)
 
 ```yaml
-
 undertow:
  #io-threads: #工作线程创建的I/O线程数,默认值源自可用处理器的数量.
  #worker-threads: #工作线程数,默认值是I/O线程数的8倍.
@@ -32,6 +31,13 @@ undertow:
   #max_headers: 200 #最大header请求个数 
  #socket-options: #socket配置项 一般不需要配置采用默认即可,如需自定义配置请具体参考org.xnio.Options.java
 
+web-socket-byte-buffer-pool:
+ #direct: false
+ #buffer-size: 2048
+ #maximum-pool-size: -1
+ #thread-local-cache-size = 12
+ #leak-detection-percent = 0
+
 access-log: #访问日志
  enabled: false #是否开启accesslog
  pattern: common #日志格式 common=%h %l %u %t %r %s %b  combined=%h %l %u %t \"%r\" %s %b %{i,Referer} %{i,User-Agent}  commonobf=%o %l %u %t %r %s %b  combinedobf=%o %l %u %t %r %s %b %{i,Referer} %{i,User-Agent}
@@ -39,5 +45,4 @@ access-log: #访问日志
  suffix: log #日志后缀
  dir: logs #日志目录
  rotate: true #日志轮替
-
  ```
