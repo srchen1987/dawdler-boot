@@ -30,5 +30,14 @@ public interface WebServer {
 	int getPort();
 
 	void setPort(int port);
+	
+	int getSslPort();
+
+	void setSslPort(int sslPort);
+
+	default void await() throws Throwable{
+
+	};
+
 
 }

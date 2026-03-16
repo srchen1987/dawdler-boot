@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.KeyStore;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventListener;
@@ -34,6 +38,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.Option;
@@ -46,6 +56,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import club.dawdler.boot.web.config.WebServerConfig.Compression;
 import club.dawdler.boot.web.config.WebServerConfig.Server;
+import club.dawdler.boot.web.config.WebServerConfig.Ssl;
 import club.dawdler.boot.web.server.WebServer;
 import club.dawdler.boot.web.server.component.ServletComponentProvider;
 import club.dawdler.boot.web.server.component.ServletContainerInitializerData;
@@ -53,10 +64,10 @@ import club.dawdler.boot.web.server.component.ServletContainerInitializerProvide
 import club.dawdler.boot.web.undertow.compression.CompressibleMimeTypePredicate;
 import club.dawdler.boot.web.undertow.config.UndertowConfig;
 import club.dawdler.boot.web.undertow.config.UndertowConfig.AccessLog;
-import club.dawdler.boot.web.undertow.config.UndertowConfig.WebSocketByteBufferPool;
 import club.dawdler.boot.web.undertow.deployment.UndertowDeployer;
 import club.dawdler.boot.web.undertow.deployment.UndertowDeployerProvider;
 import club.dawdler.boot.web.undertow.error.UndertowExceptionHandler;
+import club.dawdler.boot.web.undertow.handlers.RateLimitHandler;
 import club.dawdler.clientplug.web.classloader.RemoteClassLoaderFire;
 import club.dawdler.clientplug.web.classloader.RemoteClassLoaderFireHolder;
 import club.dawdler.core.order.OrderData;
@@ -67,9 +78,9 @@ import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.UndertowOptions;
+import io.undertow.Version;
 import io.undertow.predicate.Predicates;
 import io.undertow.predicate.RequestLargerThanPredicate;
-import io.undertow.server.DefaultByteBufferPool;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.GracefulShutdownHandler;
 import io.undertow.server.handlers.GracefulShutdownHandler.ShutdownListener;
@@ -89,7 +100,6 @@ import io.undertow.servlet.core.ApplicationListeners;
 import io.undertow.servlet.core.ManagedFilter;
 import io.undertow.servlet.core.ManagedListener;
 import io.undertow.servlet.util.ImmediateInstanceFactory;
-import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletContainerInitializer;
 import jakarta.servlet.ServletContext;
@@ -99,7 +109,6 @@ import jakarta.servlet.annotation.HandlesTypes;
 /**
  * @author jackson.song
  * @version V1.0
- * @param <T>
  * undertow实现的web服务器
  */
 public class UndertowWebServer implements WebServer {
@@ -112,6 +121,7 @@ public class UndertowWebServer implements WebServer {
 	private final List<OrderData<RemoteClassLoaderFire>> fireList = RemoteClassLoaderFireHolder.getInstance()
 			.getRemoteClassLoaderFire();
 	private Integer port;
+	private Integer sslPort;
 	private GracefulShutdownHandler gracefulShutdownHandler;
 	private CountDownLatch countDownLatch;
 	private long gracefulShutdownTimeout;
@@ -160,6 +170,9 @@ public class UndertowWebServer implements WebServer {
 			if (port == null) {
 				port = server.getPort();
 			}
+			if (sslPort == null) {
+				sslPort = undertowConfig.getSsl().getSslPort();
+			}
 			DeploymentInfo deployment = Servlets.deployment();
 			deployment.setClassLoader(Thread.currentThread().getContextClassLoader());
 			addServletContainerInitializers(deployment, servletContainerInitializerMap);
@@ -169,18 +182,10 @@ public class UndertowWebServer implements WebServer {
 				orderData.getData().deploy(undertowConfig, deployment);
 			}
 			manager = container.addDeployment(deployment);
-			WebSocketDeploymentInfo info = (WebSocketDeploymentInfo) deployment.getServletContextAttributes()
-					.get(WebSocketDeploymentInfo.ATTRIBUTE_NAME);
-			if (info != null) {
-				WebSocketByteBufferPool webSocketByteBufferPool = undertowConfig.getWebSocketByteBufferPool();
-				info.setBuffers(new DefaultByteBufferPool(webSocketByteBufferPool.isDirect(),
-						webSocketByteBufferPool.getBufferSize(),
-						webSocketByteBufferPool.getMaximumPoolSize(), webSocketByteBufferPool.getThreadLocalCacheSize(),
-						webSocketByteBufferPool.getLeakDecetionPercent()));
-			}
 			manager.deploy();
 			servletContext = manager.getDeployment().getServletContext();
 			HttpHandler httpHandler = manager.start();
+			httpHandler = setRateLimitHandler(httpHandler);
 			httpHandler = setGracefulShutdownHandler(httpHandler);
 			httpHandler = setAccessLogHandler(httpHandler);
 			httpHandler = setCompressionHandler(httpHandler);
@@ -200,6 +205,7 @@ public class UndertowWebServer implements WebServer {
 			injectLister(manager);
 			undertow = builder.build();
 			undertow.start();
+			System.out.println("Undertow Version: "+Version.getFullVersionString());
 		}
 	}
 
@@ -275,6 +281,14 @@ public class UndertowWebServer implements WebServer {
 		return new EncodingHandler(repository).setNext(httpHandler);
 	}
 
+	public HttpHandler setRateLimitHandler(HttpHandler httpHandler) {
+		Integer maxConcurrentRequests = undertowConfig.getUndertow().getMaxConcurrentRequests();
+		if (maxConcurrentRequests != null && maxConcurrentRequests > 0) {
+			return new RateLimitHandler(httpHandler, maxConcurrentRequests);
+		}
+		return httpHandler;
+	}
+
 	private void componentLoadFire(Class<?> type, Object target) throws Throwable {
 		for (OrderData<RemoteClassLoaderFire> rf : fireList) {
 			rf.getData().onLoadFire(type, target);
@@ -283,13 +297,28 @@ public class UndertowWebServer implements WebServer {
 
 	private void bindServer(Builder builder) {
 		Server server = undertowConfig.getServer();
-		String host = server.getHost();
+		String host = server.getHost() == null ? "0.0.0.0" : server.getHost();
 		boolean http2 = server.isHttp2();
 		if (http2) {
 			builder.setServerOption(UndertowOptions.ENABLE_HTTP2, http2);
 		}
 		builder.setServerOption(UndertowOptions.SHUTDOWN_TIMEOUT, 0);
-		builder.addHttpListener(port, host == null ? "0.0.0.0" : host);
+
+		if (undertowConfig.getSsl().isSslEnabled()) {
+			try {
+				SSLContext sslContext = createSSLContext();
+				builder.addHttpsListener(sslPort, host, sslContext);
+				System.out.println("HTTPS Port: "+host+":"+sslPort);
+			} catch (Exception e) {
+				logger.error("Failed to configure SSL listener", e);
+				throw new RuntimeException("Failed to configure SSL listener", e);
+			}
+		}
+
+		if (server.isHttpEnabled()) {
+			builder.addHttpListener(port, host);
+			System.out.println("HTTP Port: "+host+":"+port);
+		}
 	}
 
 	private void configUndertowServerOption(Builder builder) {
@@ -350,7 +379,7 @@ public class UndertowWebServer implements WebServer {
 	}
 
 	private void configUndertow(Builder builder) {
-		club.dawdler.boot.web.undertow.config.UndertowConfig.Undertow undertow = undertowConfig.getUndertow();
+		UndertowConfig.Undertow undertow = undertowConfig.getUndertow();
 		Integer bufferSize = undertow.getBufferSize();
 		if (bufferSize != null) {
 			builder.setBufferSize(bufferSize);
@@ -438,4 +467,79 @@ public class UndertowWebServer implements WebServer {
 		this.port = port;
 	}
 
+	private SSLContext createSSLContext() throws Exception {
+		Ssl ssl = undertowConfig.getSsl();
+
+		String keystoreFile = ssl.getSslKeystoreFile();
+		String keystorePassword = ssl.getSslKeystorePassword();
+		String keystoreType = ssl.getSslKeystoreType();
+		String keyPassword = ssl.getSslKeyPassword();
+		String keyAlias = ssl.getSslKeyAlias();
+		String protocol = ssl.getSslProtocol();
+
+		if (keystoreFile == null || keystorePassword == null) {
+			throw new IllegalArgumentException("SSL keystore file and password must be configured");
+		}
+		if (!keystoreFile.startsWith("/")) {
+			keystoreFile = "/" + keystoreFile;
+		}
+		KeyStore keyStore = KeyStore.getInstance(keystoreType != null ? keystoreType : "JKS");
+		try (InputStream keystoreInput = startClass.getResourceAsStream(keystoreFile)) {
+			if (keystoreInput == null) {
+				Path keystorePath = Paths.get(keystoreFile);
+				if (Files.exists(keystorePath)) {
+					try (InputStream fileInput = Files.newInputStream(keystorePath)) {
+						keyStore.load(fileInput, keystorePassword.toCharArray());
+					}
+				} else {
+					throw new IllegalArgumentException("SSL keystore file not found: " + keystoreFile);
+				}
+			} else {
+				keyStore.load(keystoreInput, keystorePassword.toCharArray());
+			}
+		}
+
+		KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+
+		if (keyAlias != null && keyStore.isKeyEntry(keyAlias)) {
+			KeyStore newKeyStore = KeyStore.getInstance("JKS");
+			newKeyStore.load(null, null);
+
+			char[] keyPassArray = keyPassword != null ? keyPassword.toCharArray() : keystorePassword.toCharArray();
+			java.security.Key key = keyStore.getKey(keyAlias, keyPassArray);
+			java.security.cert.Certificate[] certChain = keyStore.getCertificateChain(keyAlias);
+
+			if (key != null && certChain != null) {
+				newKeyStore.setKeyEntry(keyAlias, key, keyPassArray, certChain);
+				keyManagerFactory.init(newKeyStore, keyPassArray);
+			} else {
+				keyManagerFactory.init(keyStore, keyPassArray);
+			}
+		} else {
+			keyManagerFactory.init(keyStore,
+					keyPassword != null ? keyPassword.toCharArray() : keystorePassword.toCharArray());
+		}
+
+		KeyManager[] keyManagers = keyManagerFactory.getKeyManagers();
+
+		TrustManagerFactory trustManagerFactory = TrustManagerFactory
+				.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+		trustManagerFactory.init(keyStore);
+		TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+
+		SSLContext sslContext = SSLContext.getInstance(protocol != null ? protocol : "TLS");
+		sslContext.init(keyManagers, trustManagers, new java.security.SecureRandom());
+
+		return sslContext;
+	}
+
+	@Override
+	public int getSslPort() {
+		return sslPort;
+	}
+
+	@Override
+	public void setSslPort(int sslPort) {
+		this.sslPort = sslPort;
+	}
 }

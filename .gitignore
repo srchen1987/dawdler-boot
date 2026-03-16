@@ -18,9 +18,11 @@
 #target fil
 target/
 bin/
-.vscode/
+
 /target/
 .classpath
 .project
 .settings
+.settings/*
 .vscode/settings.json
+.vscode/launch.json

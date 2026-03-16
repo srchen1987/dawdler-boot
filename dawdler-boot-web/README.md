@@ -6,16 +6,27 @@
 
 ### 1. 配置信息
 
-1、 undertow.yml 目前支持的容器undertow. (未来支持tomcat, jetty 则为tomcat.yml、jetty.yml)
+1、 undertow.yml 、tomcat.yml(目前支持这两种容器). 位于resources下.
 
 ```yaml
-
 server:
+ http-enabled: true # 是否启用HTTP连接器
  host: 192.168.1.188 #web容器的web地址 默认为空 绑定0.0.0.0
  port: 8080 #web容器提供http请求的端口号 默认8080
  http2: false #是否支持http2 默认为false
  graceful-shutdown: true #是否优雅停机 默认为true
  graceful-shutdown-timeout: 30000 # 优雅停机的等待时间 单位为毫秒 默认为30000毫秒
+
+# SSL配置 用于启动https服务
+ssl:
+ ssl-enabled: true # 是否启用SSL
+ ssl-port: 8443 # HTTPS端口 (默认: 8443)
+ ssl-keystore-file: keystore.jks # 密钥库文件路径 支持绝对路径和相对路径,相对路径放在resources下.
+ ssl-keystore-password: changeit # 密钥库密码
+ ssl-keystore-type: JKS # 密钥库类型 (默认: JKS)
+ ssl-key-alias: tomcat # 密钥别名
+ ssl-key-password: changeit # 密钥密码
+ ssl-protocol: TLS # SSL协议 (默认: TLS)
 
 context-path: user-api #web的context-path 默认为空 如果设置为user-api 访问http://localhost:8080/user-api/xxx 如果不设 http://localhost:8080/xxx
 deploy-name: user-api # web的deploy-name 默认为空
@@ -28,7 +39,7 @@ error-pages: # 错误页面定义 错误状态码 错误页面的文件
  404: /404.html
 
 compression:
- enabled: false #是否开启压缩,只有前端代理服务器或游览器支持压缩时才有效,请求头中包含Accept-Encoding: gzip, deflate
+ enabled: false #是否开启压缩,只有前端代理服务器或浏览器支持压缩时才有效,请求头中包含Accept-Encoding: gzip, deflate
  mime-types: #默认支持的类型.可不填,需要扩展可以填写
  - text/html
  - text/xml
@@ -39,7 +50,6 @@ compression:
  - application/json
  - application/xml
  min-response-size: 65536 #压缩的阈值,单位为kb 默认为64kb
-
 ```
 
 2、logback.xml 日志配置文件
@@ -50,7 +60,7 @@ compression:
 
 5、client-conf.xml [client-conf.xml配置](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-client/README.md#2-client-confxml配置文件说明)、[扫描组件包配置](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-client-plug-web/README.md#10-扫描组件包配置)、[远程加载组件](https://github.com/srchen1987/dawdler-series/tree/master/dawdler/dawdler-load-plug/dawdler-client-plug-load/README.md#2-配置需要加载的组件)
 
-### 3. 配置启动服务类
+### 2. 配置启动服务类
 
 ```java
 
@@ -68,36 +78,44 @@ public class UserWebApplication {
 
 ```
 
-### 4. ide启动参数配置(JPMS jdk17+以上需要)
+### 3. ide启动参数配置(JPMS jdk17+以上需要)
 
 ```shell
---add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED  --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED
+--add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED  --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED
 ```
 
-### 5. 通过dawdler-boot-maven-plugin打包运行方式(JPMS jdk17+以上需要)
+### 4. 通过dawdler-boot-maven-plugin打包运行方式(JPMS jdk17+以上需要)
 
-```sh
-java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.classloader --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader --add-opens=java.base/jdk.internal.misc=dawdler.boot.classloader  -p xxx-all.jar -m dawdler.boot.classloader
+```shell
+java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=dawdler.boot.classloader --add-opens=java.base/jdk.internal.loader=dawdler.boot.classloader --add-opens=java.base/jdk.internal.misc=dawdler.boot.classloader  -p xxx-all.jar -m dawdler.boot.classloader
 ```
 
 或
 
-```sh
-java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED  --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -jar xxx-all.jar
+```shell
+java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED  --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -jar xxx-all.jar
 ```
 
-### 6. 运行时指定端口号
+### 5. 运行时指定端口号
 
 启动参数指定优先于虚拟机系统属性指定.
 
-#### 6.1 启动参数指定
+#### 5.1 启动参数指定
 
 ```shell
 --server.port=8081
 ```
 
-#### 6.2 虚拟机系统属性指定
+```shell
+--server.ssl.port=8443
+```
+
+#### 5.2 虚拟机系统属性指定
 
 ```shell
 -Dserver.port=8081
+```
+
+```shell
+--Dserver.ssl.port=8443
 ```

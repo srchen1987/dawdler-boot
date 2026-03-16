@@ -21,7 +21,7 @@ pom.xml中加入
 
 以下配置文件存放在 classpath下,一般为源码的resources下.
 
-1、dawdler.keystore 私钥证书 可以采用默认的.如果需要重新制作,请参考[采用keytool制作证书](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-server/README.md#22-采用keytool制作证书) 
+1、dawdler.keystore 私钥证书 可以采用默认的.如果需要重新制作,请参考[采用keytool制作证书](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-server/README.md#22-采用keytool制作证书)
 
 2、dawdler-config.yml 统一配置中心文件 如果采用统一配置中心则需要此配置 [dawdler-config.yml](https://github.com/srchen1987/dawdler-series/blob/master/dawdler/dawdler-config-center/dawdler-config-center-consul/dawdler-config-center-consul-core/README.md#1-dawdler-configyml配置文件)
 
@@ -34,7 +34,6 @@ pom.xml中加入
 ### 3. 配置启动服务类
 
 ```java
-
 package com.dawdler.user.application;
 
 import club.dawdler.boot.server.annotation.DawdlerBootApplication;
@@ -45,7 +44,6 @@ public class UserServiceApplication {
             DawdlerServerApplication.run(UserServiceApplication.class, args);
     }
 }
-
 ```
 
 ### 4. ide启动参数配置(JPMS jdk17+以上需要)
@@ -62,7 +60,7 @@ java --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/jdk.intern
 
 或
 
-```sh
+```shell
 java --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/jdk.internal.perf=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED -jar xxx-all.jar
 ```
 

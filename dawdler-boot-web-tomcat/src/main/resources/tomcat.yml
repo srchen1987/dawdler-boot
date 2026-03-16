@@ -1,0 +1,26 @@
+tomcat:
+  # SSL配置
+  ssl-enabled: true
+  ssl-keystore-file: /path/to/keystore.jks
+  ssl-keystore-password: changeit
+  ssl-keystore-type: JKS
+  ssl-key-alias: tomcat
+  ssl-key-password: changeit
+  ssl-protocol: TLS
+  
+  # 其他配置
+  #max-threads: #最大线程数
+  #min-spare-threads: #最小空闲线程数
+  #accept-count: #请求队列长度
+  #graceful-shutdown-response-timeout: 3000 # 优雅停机后其他请求在此期间会返回503等待时间 单位为毫秒 默认为3000毫秒,如果设置为0 新请求将直接拒绝.
+  #virtual-thread: false # 是否启用虚拟线程
+  #tomcat-options: #tomcat下的配置,一般不需要配置,如需自定义配置请具体参考org.apache.coyote.http11.Http11NioProtocol.java
+  #maxKeepAliveRequests: 100
+
+access-log: #访问日志
+  enabled: false #是否开启accesslog
+  pattern: common #日志格式 common=%h %l %u %t %r %s %b  combined=%h %l %u %t \"%r\" %s %b %{i,Referer} %{i,User-Agent}
+  prefix: access_log. #日志前缀
+  suffix: log #日志后缀
+  dir: logs #日志目录
+  rotate: true #日志轮替

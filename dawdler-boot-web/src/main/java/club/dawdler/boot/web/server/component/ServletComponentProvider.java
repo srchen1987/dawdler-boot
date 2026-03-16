@@ -18,6 +18,7 @@ package club.dawdler.boot.web.server.component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventListener;
@@ -33,7 +34,6 @@ import club.dawdler.core.scan.component.reader.ClassStructureParser;
 import club.dawdler.core.scan.component.reader.ClassStructureParser.ClassStructure;
 import club.dawdler.util.DawdlerTool;
 import club.dawdler.util.spring.antpath.Resource;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletContainerInitializer;
@@ -55,7 +55,7 @@ import jakarta.websocket.server.ServerEndpoint;
  * @author jackson.song
  * @version V1.0
  * web组件提供者 支持 servlet filter listener
- *              ServletContainerInitializer实现类的@HandlesTypes
+ * ServletContainerInitializer实现类的@HandlesTypes
  */
 public class ServletComponentProvider {
 	private final List<Class<Servlet>> HTTP_SERVLET_LIST = new ArrayList<>();
@@ -74,7 +74,7 @@ public class ServletComponentProvider {
 
 	public void scanComponent(String[] packagePaths,
 			Map<ServletContainerInitializer, ServletContainerInitializerData> servletContainerInitializerMap)
-			throws IOException {
+			throws IOException, URISyntaxException {
 		ClientPlugClassLoader clientPlugClassLoader = ClientPlugClassLoader.newInstance(DawdlerTool.getCurrentPath());
 		Map<String, Resource> removeDuplicates = new LinkedHashMap<>();
 		if (packagePaths != null) {

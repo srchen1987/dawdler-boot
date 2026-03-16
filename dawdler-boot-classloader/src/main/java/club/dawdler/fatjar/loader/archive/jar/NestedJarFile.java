@@ -202,7 +202,6 @@ public class NestedJarFile extends JarFile {
 
 	@Override
 	public ZipEntry getEntry(String name) {
-		ensureOpen();
 		return this.entries.getEntry(name);
 	}
 
@@ -211,7 +210,6 @@ public class NestedJarFile extends JarFile {
 	}
 
 	public synchronized InputStream getInputStream(ZipEntry entry) throws IOException {
-		ensureOpen();
 		if (entry instanceof NestedJarEntry jarEntry) {
 			return this.entries.getInputStream(jarEntry);
 		}
@@ -268,13 +266,11 @@ public class NestedJarFile extends JarFile {
 
 	@Override
 	public String getComment() {
-		ensureOpen();
 		return this.comment;
 	}
 
 	@Override
 	public int size() {
-		ensureOpen();
 		return this.entries.getSize();
 	}
 
@@ -296,7 +292,7 @@ public class NestedJarFile extends JarFile {
 
 	private void ensureOpen() {
 		if (this.closed) {
-			throw new IllegalStateException("zip file closed!");
+			throw new IllegalStateException(this.rootFile.getFile().getPath() + " file closed!");
 		}
 	}
 

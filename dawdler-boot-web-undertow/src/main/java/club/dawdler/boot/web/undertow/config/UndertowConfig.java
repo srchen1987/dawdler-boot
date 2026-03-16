@@ -82,6 +82,9 @@ public class UndertowConfig extends WebServerConfig {
 		@JsonProperty("direct-buffers")
 		private Boolean directBuffers;
 
+		@JsonProperty("max-concurrent-requests")
+		private Integer maxConcurrentRequests;
+
 		public Integer getBufferSize() {
 			return bufferSize;
 		}
@@ -128,6 +131,13 @@ public class UndertowConfig extends WebServerConfig {
 
 		public void setSocketOptions(Map<String, Object> socketOptions) {
 			this.socketOptions = socketOptions;
+		}
+		public Integer getMaxConcurrentRequests() {
+			return maxConcurrentRequests;
+		}
+
+		public void setMaxConcurrentRequests(Integer maxConcurrentRequests) {
+			this.maxConcurrentRequests = maxConcurrentRequests;
 		}
 
 	}
