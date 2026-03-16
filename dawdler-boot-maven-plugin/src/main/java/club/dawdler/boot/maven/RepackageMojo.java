@@ -98,7 +98,6 @@ public class RepackageMojo extends AbstractMojo {
 		if (packaging == null || !packaging.equals("jar")) {
 			return;
 		}
-
 		displayPluginInfo();
 
 		JarOutputStream out = null;

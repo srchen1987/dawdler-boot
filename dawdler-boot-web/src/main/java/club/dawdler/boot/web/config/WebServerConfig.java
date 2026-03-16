@@ -16,11 +16,11 @@
  */
 package club.dawdler.boot.web.config;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author jackson.song
@@ -30,6 +30,8 @@ import java.util.Set;
 public abstract class WebServerConfig {
 
 	protected Server server = new Server();
+
+	protected Ssl ssl = new Ssl();
 
 	protected Compression compression = new Compression();
 
@@ -96,6 +98,14 @@ public abstract class WebServerConfig {
 		this.server = server;
 	}
 
+	public Ssl getSsl() {
+		return ssl;
+	}
+
+	public void setSsl(Ssl ssl) {
+		this.ssl = ssl;
+	}
+
 	public Compression getCompression() {
 		return compression;
 	}
@@ -117,6 +127,9 @@ public abstract class WebServerConfig {
 
 		@JsonProperty("graceful-shutdown-timeout")
 		protected long gracefulShutdownTimeout = 30000;
+
+		@JsonProperty("http-enabled")
+		private boolean httpEnabled = true;
 
 		public String getHost() {
 			return host;
@@ -158,6 +171,102 @@ public abstract class WebServerConfig {
 			this.gracefulShutdownTimeout = gracefulShutdownTimeout;
 		}
 
+		public boolean isHttpEnabled() {
+			return httpEnabled;
+		}
+
+	}
+
+	public static class Ssl {
+		
+		@JsonProperty("ssl-enabled")
+		private boolean sslEnabled = false;
+
+		@JsonProperty("ssl-port")
+		private Integer sslPort = 8443;
+
+		@JsonProperty("ssl-keystore-file")
+		private String sslKeystoreFile;
+
+		@JsonProperty("ssl-keystore-password")
+		private String sslKeystorePassword;
+
+		@JsonProperty("ssl-keystore-type")
+		private String sslKeystoreType = "JKS";
+
+		@JsonProperty("ssl-key-alias")
+		private String sslKeyAlias;
+
+		@JsonProperty("ssl-key-password")
+		private String sslKeyPassword;
+
+		@JsonProperty("ssl-protocol")
+		private String sslProtocol = "TLS";
+
+		public boolean isSslEnabled() {
+			return sslEnabled;
+		}
+
+		public void setSslEnabled(boolean sslEnabled) {
+			this.sslEnabled = sslEnabled;
+		}
+
+		public Integer getSslPort() {
+			return sslPort;
+		}
+
+		public void setSslPort(Integer sslPort) {
+			this.sslPort = sslPort;
+		}
+
+		public String getSslKeystoreFile() {
+			return sslKeystoreFile;
+		}
+
+		public void setSslKeystoreFile(String sslKeystoreFile) {
+			this.sslKeystoreFile = sslKeystoreFile;
+		}
+
+		public String getSslKeystorePassword() {
+			return sslKeystorePassword;
+		}
+
+		public void setSslKeystorePassword(String sslKeystorePassword) {
+			this.sslKeystorePassword = sslKeystorePassword;
+		}
+
+		public String getSslKeystoreType() {
+			return sslKeystoreType;
+		}
+
+		public void setSslKeystoreType(String sslKeystoreType) {
+			this.sslKeystoreType = sslKeystoreType;
+		}
+
+		public String getSslKeyAlias() {
+			return sslKeyAlias;
+		}
+
+		public void setSslKeyAlias(String sslKeyAlias) {
+			this.sslKeyAlias = sslKeyAlias;
+		}
+
+		public String getSslKeyPassword() {
+			return sslKeyPassword;
+		}
+
+		public void setSslKeyPassword(String sslKeyPassword) {
+			this.sslKeyPassword = sslKeyPassword;
+		}
+
+		public String getSslProtocol() {
+			return sslProtocol;
+		}
+
+		public void setSslProtocol(String sslProtocol) {
+			this.sslProtocol = sslProtocol;
+		}
+
 	}
 
 	public static class Compression {
@@ -166,8 +275,6 @@ public abstract class WebServerConfig {
 
 		@JsonProperty("mime-types")
 		private Set<String> mimeTypes = new HashSet<>();
-		@JsonProperty("min-response-size")
-		private long minResponseSize = 1024 * 64;
 
 		public Compression() {
 			mimeTypes.add("text/html");
@@ -179,6 +286,9 @@ public abstract class WebServerConfig {
 			mimeTypes.add("application/json");
 			mimeTypes.add("application/xml");
 		}
+
+		@JsonProperty("min-response-size")
+		private long minResponseSize = 1024 * 64;
 
 		public boolean getEnabled() {
 			return this.enabled;
@@ -204,4 +314,5 @@ public abstract class WebServerConfig {
 			this.minResponseSize = minSize;
 		}
 	}
+
 }

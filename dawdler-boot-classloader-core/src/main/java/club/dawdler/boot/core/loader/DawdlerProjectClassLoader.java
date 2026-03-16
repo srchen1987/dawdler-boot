@@ -109,4 +109,11 @@ public class DawdlerProjectClassLoader extends URLClassLoader implements DeployC
 		return null;
 	}
 
+	@Override
+	public Enumeration<URL> getResources(String name) throws IOException {
+		return parent.getParent().getResources(name);
+	}
+
+	
+
 }

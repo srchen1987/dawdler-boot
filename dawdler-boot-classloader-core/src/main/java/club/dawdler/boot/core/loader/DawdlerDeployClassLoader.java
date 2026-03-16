@@ -26,7 +26,6 @@ import java.util.jar.Manifest;
 import club.dawdler.core.context.DawdlerRuntimeContext;
 import club.dawdler.core.loader.DeployClassLoader;
 import club.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
-
 import sun.misc.Resource;
 
 /**
@@ -38,8 +37,7 @@ public class DawdlerDeployClassLoader extends SecureClassLoader implements Deplo
 	private final LaunchedURLClassLoader classLoader;
 	private final DawdlerRuntimeContext dawdlerRuntimeContext;
 
-	public DawdlerDeployClassLoader(LaunchedURLClassLoader classLoader, DawdlerRuntimeContext dawdlerRuntimeContext)
-			throws Exception {
+	public DawdlerDeployClassLoader(LaunchedURLClassLoader classLoader, DawdlerRuntimeContext dawdlerRuntimeContext) throws Exception {
 		super(classLoader);
 		this.classLoader = classLoader;
 		this.dawdlerRuntimeContext = dawdlerRuntimeContext;

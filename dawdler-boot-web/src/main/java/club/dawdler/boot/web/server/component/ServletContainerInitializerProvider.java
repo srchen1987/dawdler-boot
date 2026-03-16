@@ -16,14 +16,14 @@
  */
 package club.dawdler.boot.web.server.component;
 
-import club.dawdler.core.annotation.Order;
-import club.dawdler.core.order.OrderComparator;
-import club.dawdler.core.order.OrderData;
-
-import javax.servlet.ServletContainerInitializer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
+
+import club.dawdler.core.annotation.Order;
+import club.dawdler.core.order.OrderComparator;
+import club.dawdler.core.order.OrderData;
+import javax.servlet.ServletContainerInitializer;
 
 /**
  * @author jackson.song
@@ -32,16 +32,17 @@ import java.util.ServiceLoader;
  */
 public class ServletContainerInitializerProvider {
 	private final static List<OrderData<ServletContainerInitializer>> SERVLET_CONTAINER_INITIALIZERS = new ArrayList<>();
-
 	static {
 		ServiceLoader.load(ServletContainerInitializer.class).forEach(initializer -> {
-			OrderData<ServletContainerInitializer> orderData = new OrderData<>();
-			Order order = initializer.getClass().getAnnotation(Order.class);
-			if (order != null) {
-				orderData.setOrder(order.value());
+			if (initializer instanceof ServletContainerInitializer) {
+				OrderData<ServletContainerInitializer> orderData = new OrderData<>();
+				Order order = initializer.getClass().getAnnotation(Order.class);
+				if (order != null) {
+					orderData.setOrder(order.value());
+				}
+				orderData.setData(initializer);
+				SERVLET_CONTAINER_INITIALIZERS.add(orderData);
 			}
-			orderData.setData(initializer);
-			SERVLET_CONTAINER_INITIALIZERS.add(orderData);
 		});
 		OrderComparator.sort(SERVLET_CONTAINER_INITIALIZERS);
 	}

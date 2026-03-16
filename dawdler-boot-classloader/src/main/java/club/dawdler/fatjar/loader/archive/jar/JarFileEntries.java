@@ -42,7 +42,7 @@ public class JarFileEntries implements CentralDirectoryVisitor, Iterable<NestedJ
 
 	private static final int BASE_VERSION = 8;
 
-	private static final int RUNTIME_VERSION = 3;//Runtime.version().feature();
+	private static final int RUNTIME_VERSION = 8;
 
 	private static final long LOCAL_FILE_HEADER_SIZE = 30;
 
@@ -210,13 +210,8 @@ public class JarFileEntries implements CentralDirectoryVisitor, Iterable<NestedJ
 		T entry = doGetEntry(name, type, cacheEntry, null);
 		if (!isMetaInfEntry(name) && isMultiReleaseJar()) {
 			int version = RUNTIME_VERSION;
-			AsciiBytes nameAlias;
-			if(entry instanceof NestedJarEntry) {
-				NestedJarEntry jarEntry = (NestedJarEntry)entry;
-				nameAlias = jarEntry.getAsciiBytesName();
-			} else{
-				nameAlias = new AsciiBytes(name.toString());
-			}
+			AsciiBytes nameAlias = (entry instanceof NestedJarEntry) ? ((NestedJarEntry) entry).getAsciiBytesName()
+					: new AsciiBytes(name.toString());
 			while (version > BASE_VERSION) {
 				T versionedEntry = doGetEntry("META-INF/versions/" + version + "/" + name, type, cacheEntry, nameAlias);
 				if (versionedEntry != null) {

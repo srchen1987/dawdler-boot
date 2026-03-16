@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * 标识web服务的注解
  */
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 public @interface DawdlerBootApplication {
 
 }

@@ -17,14 +17,19 @@
 package club.dawdler.boot.web.starter;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLStreamHandler;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import club.dawdler.boot.core.loader.DawdlerMainClassLoader;
+import club.dawdler.fatjar.loader.archive.jar.NestedJarURLStreamHandler;
 import club.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 
 /**
@@ -44,10 +49,11 @@ public class DawdlerWebApplication {
 			mainMethod.setAccessible(true);
 			mainMethod.invoke(null, new Object[] { startClass, args });
 		} else {
+			registerNestedJarProtocolHandler();
 			DawdlerBootStarter.run(startClass, args);
 		}
 	}
-
+	
 	public static URL[] getURL() {
 		List<URL> urls = new ArrayList<URL>(64);
 		String javaHome = System.getProperty("java.home");
@@ -79,4 +85,31 @@ public class DawdlerWebApplication {
 
 		return urls.toArray(new URL[0]);
 	}
+
+	private static void registerNestedJarProtocolHandler() {
+		try {
+			Field handlersField = URL.class.getDeclaredField("handlers");
+			handlersField.setAccessible(true);
+			@SuppressWarnings("unchecked")
+			Map<String, URLStreamHandler> handlers = (Map<String, URLStreamHandler>) handlersField.get(null);
+
+			if (handlers == null) {
+				handlers = new HashMap<>();
+				Field streamHandlerLockField = URL.class.getDeclaredField("streamHandlerLock");
+				streamHandlerLockField.setAccessible(true);
+				Object lock = streamHandlerLockField.get(null);
+
+				synchronized (lock) {
+					handlersField.set(null, handlers);
+				}
+			}
+			if (!handlers.containsKey("jar")) {
+				URLStreamHandler customHandler = new NestedJarURLStreamHandler();
+				handlers.put("jar", customHandler);
+			}
+		} catch (Exception e) {
+			System.err.println("Failed to register nested jar protocol handler via reflection: " + e.getMessage());
+		}
+	}
+
 }

@@ -14,31 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package club.dawdler.boot.web.undertow.deployment;
+package club.dawdler.boot.web.tomcat.valves;
 
-import club.dawdler.boot.web.undertow.config.UndertowConfig;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-import io.undertow.servlet.api.DeploymentInfo;
-import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
+import org.apache.catalina.valves.ValveBase;
+
+import javax.servlet.ServletException;
 
 /**
  * @author jackson.song
  * @version V1.0
- * webscoket
+ * 优雅停机的Valve，在停机时返回503状态码，提示服务不可用
  */
-public class WebSocketDeployer implements UndertowDeployer {
+public class GracefulShutdownValve extends ValveBase {
+	private final AtomicBoolean shuttingDown = new AtomicBoolean(false);
 
 	@Override
-	public void deploy(UndertowConfig undertowConfig, DeploymentInfo deploymentInfo) {
-		boolean useWebsocket = !getScanServletComponent().getEndPointList().isEmpty();
-		if (useWebsocket) {
-			WebSocketDeploymentInfo info = new WebSocketDeploymentInfo();
-			getScanServletComponent().getEndPointList().forEach(endPoint -> {
-				info.addEndpoint(endPoint);
-			});
-			deploymentInfo.addServletContextAttribute(WebSocketDeploymentInfo.ATTRIBUTE_NAME, info);
+	public void invoke(Request request, Response response) throws IOException, ServletException {
+		if (shuttingDown.get()) {
+			response.setStatus(503);
+			response.getWriter().write("Service Unavailable");
+			return;
 		}
+		getNext().invoke(request, response);
+	}
 
+	public void setShuttingDown(boolean shuttingDown) {
+		this.shuttingDown.set(shuttingDown);
 	}
 
 }
