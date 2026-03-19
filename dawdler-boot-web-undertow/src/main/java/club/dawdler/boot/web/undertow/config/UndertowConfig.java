@@ -85,6 +85,8 @@ public class UndertowConfig extends WebServerConfig {
 		@JsonProperty("virtual-thread")
 		private Boolean virtualThread;
 
+		@JsonProperty("max-concurrent-requests")
+		private Integer maxConcurrentRequests;
 
 		public Integer getBufferSize() {
 			return bufferSize;
@@ -135,12 +137,20 @@ public class UndertowConfig extends WebServerConfig {
 		}
 
 		public Boolean getVirtualThread() {
-            return virtualThread;
-        }
+			return virtualThread;
+		}
 
 		public void setVirtualThread(Boolean virtualThread) {
-            this.virtualThread = virtualThread;
-        }
+			this.virtualThread = virtualThread;
+		}
+
+		public Integer getMaxConcurrentRequests() {
+			return maxConcurrentRequests;
+		}
+
+		public void setMaxConcurrentRequests(Integer maxConcurrentRequests) {
+			this.maxConcurrentRequests = maxConcurrentRequests;
+		}
 
 	}
 

@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>club.dawdler</groupId>
+		<artifactId>dawdler-boot</artifactId>
+		<version>0.1.4-jdk21-RELEASES</version>
+	</parent>
+	<properties>
+		<org.glassfish.expressly.version>6.0.0</org.glassfish.expressly.version>
+	</properties>
+	<artifactId>dawdler-boot-web-tomcat-jsp</artifactId>
+	<name>dawdler-boot-web-tomcat-jsp</name>
+	<dependencies>
+		<dependency>
+			<groupId>club.dawdler</groupId>
+			<artifactId>dawdler-boot-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.expressly</groupId>
+			<artifactId>expressly</artifactId>
+			<version>${org.glassfish.expressly.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>club.dawdler</groupId>
+			<artifactId>dawdler-boot-web-tomcat</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>club.dawdler</groupId>
+			<artifactId>dawdler-boot-web-tomcat-jsp-source</artifactId>
+		</dependency>
+	</dependencies>
+</project>

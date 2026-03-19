@@ -6,7 +6,6 @@ import club.dawdler.boot.web.undertow.deployment.ListenerDeployer;
 import club.dawdler.boot.web.undertow.deployment.ServletDeployer;
 import club.dawdler.boot.web.undertow.deployment.StaticResourceDeployer;
 import club.dawdler.boot.web.undertow.deployment.UndertowDeployer;
-import club.dawdler.boot.web.undertow.deployment.WebSocketDeployer;
 import club.dawdler.boot.web.undertow.server.UndertowWebServer;
 
 module dawdler.boot.web.undertow {
@@ -17,7 +16,6 @@ module dawdler.boot.web.undertow {
 	requires dawdler.util;
 	requires transitive dawdler.boot.web;
 	requires dawdler.boot.classloader;
-	requires transitive undertow.websockets.jsr;
 	requires transitive xnio.api;
 	requires wildfly.common;
 	requires com.fasterxml.jackson.dataformat.yaml;
@@ -39,6 +37,6 @@ module dawdler.boot.web.undertow {
 	uses UndertowDeployer;
 
 	provides UndertowDeployer with BaseConfigDeployer, StaticResourceDeployer, ErrorPagesDeployer, ServletDeployer,
-			FilterDeployer, ListenerDeployer, WebSocketDeployer;
+			FilterDeployer, ListenerDeployer;
 
 }

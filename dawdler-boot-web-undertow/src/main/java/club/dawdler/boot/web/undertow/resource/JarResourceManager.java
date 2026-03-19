@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import club.dawdler.fatjar.loader.archive.jar.NestedJarURLStreamHandler;
-
 import io.undertow.server.handlers.resource.Resource;
 import io.undertow.server.handlers.resource.ResourceChangeListener;
 import io.undertow.server.handlers.resource.ResourceManager;

@@ -4,4 +4,3 @@ club.dawdler.boot.web.undertow.deployment.ErrorPagesDeployer
 club.dawdler.boot.web.undertow.deployment.ServletDeployer
 club.dawdler.boot.web.undertow.deployment.FilterDeployer
 club.dawdler.boot.web.undertow.deployment.ListenerDeployer
-club.dawdler.boot.web.undertow.deployment.WebSocketDeployer
