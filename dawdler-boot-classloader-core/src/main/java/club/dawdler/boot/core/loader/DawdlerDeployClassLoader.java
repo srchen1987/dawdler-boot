@@ -26,7 +26,6 @@ import java.util.jar.Manifest;
 import club.dawdler.core.context.DawdlerRuntimeContext;
 import club.dawdler.core.loader.DeployClassLoader;
 import club.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
-
 import jdk.internal.loader.Resource;
 
 /**

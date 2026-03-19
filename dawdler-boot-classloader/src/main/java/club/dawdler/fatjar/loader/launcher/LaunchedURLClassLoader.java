@@ -29,7 +29,6 @@ import java.util.jar.Manifest;
 
 import club.dawdler.fatjar.loader.archive.Archive;
 import club.dawdler.fatjar.loader.archive.jar.NestedJarFile;
-
 import jdk.internal.loader.Resource;
 import jdk.internal.loader.URLClassPath;
 
@@ -48,12 +47,12 @@ public class LaunchedURLClassLoader extends URLClassLoader {
 
 	public LaunchedURLClassLoader(Archive rootArchive, URL[] urls, ClassLoader parent) {
 		super(urls, parent);
-		ucp = new URLClassPath(urls, null, null);
+		ucp = new URLClassPath(urls, null);
 		this.rootArchive = rootArchive;
 	}
 
 	public Resource getResource(String path, boolean check) {
-		return ucp.getResource(path, check);
+		return ucp.getResource(path);
 	}
 
 	public void deployResolveClass(Class<?> clazz) {

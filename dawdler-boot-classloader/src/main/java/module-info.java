@@ -6,4 +6,5 @@ module dawdler.boot.classloader {
 	
 	exports club.dawdler.fatjar.loader.launcher;
 	exports club.dawdler.fatjar.loader.archive.jar;
+
 }

@@ -49,6 +49,9 @@ public class NestedJarURLStreamHandler extends URLStreamHandler {
 
 	@Override
 	protected URLConnection openConnection(URL url) throws IOException {
+		if (!url.getProtocol().equals("jar")) {
+			return null;
+		}
 		if (this.nestedJarFile != null && isUrlInJarFile(url, this.nestedJarFile)) {
 			return NestedJarURLConnection.get(url, nestedJarFile);
 		} else {

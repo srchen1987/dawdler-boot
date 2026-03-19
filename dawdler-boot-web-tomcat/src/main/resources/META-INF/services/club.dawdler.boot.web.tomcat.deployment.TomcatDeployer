@@ -1,0 +1,6 @@
+club.dawdler.boot.web.tomcat.deployment.BaseConfigDeployer
+club.dawdler.boot.web.tomcat.deployment.StaticResourceDeployer
+club.dawdler.boot.web.tomcat.deployment.ErrorPagesDeployer
+club.dawdler.boot.web.tomcat.deployment.ServletDeployer
+club.dawdler.boot.web.tomcat.deployment.FilterDeployer
+club.dawdler.boot.web.tomcat.deployment.ListenerDeployer

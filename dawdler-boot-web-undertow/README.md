@@ -19,18 +19,19 @@ pom.xml中加入
 
 ### 2. 配置信息
 
-undertow.yml 目前支持的容器undertow. (未来支持tomcat,jetty 则为tomcat.yml、jetty.yml)
+undertow.yml 位于resources下.
 
 ```yaml
 undertow:
  #io-threads: #工作线程创建的I/O线程数,默认值源自可用处理器的数量.
- #worker-threads: #工作线程数,默认值是I/O线程数的8倍.
+ #worker-threads: #工作线程数,默认值是I/O线程数的8倍. 当virtual-thread为true时,此值将无效.
  #buffer-size: #每个缓冲区的大小,默认值源自JVM可用的最大内存量.单位为byte.
  #direct-buffers: #是否开启堆外内存缓冲区, 默认值当jvm大小超过64M时则开启.
  #virtual-thread: #是否开启虚拟线程 默认未开启
  #undertow-options: #undertow下的配置,一般不需要配置,如需自定义配置请具体参考UndertowOptions.java
-  #max_headers: 200 #最大header请求个数 
+  #max_headers: 200 #最大header请求个数
  #socket-options: #socket配置项 一般不需要配置采用默认即可,如需自定义配置请具体参考org.xnio.Options.java
+ #max-concurrent-requests: #超过限制的请求将返回503状态码. 为空或为0时不启用, 默认为空.
 
 web-socket-byte-buffer-pool:
  #direct: false
@@ -46,4 +47,8 @@ access-log: #访问日志
  suffix: log #日志后缀
  dir: logs #日志目录
  rotate: true #日志轮替
- ```
+```
+
+### 3. 与tomcat的切换
+
+dawdler-boot-web-tomcat 和 dawdler-boot-web-undertow 不能同时引入,需要哪个容器就引入对应的依赖即可.

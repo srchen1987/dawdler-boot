@@ -28,7 +28,6 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import club.dawdler.core.loader.DeployClassLoader;
-
 import jdk.internal.loader.Resource;
 import jdk.internal.loader.URLClassPath;
 import jdk.internal.perf.PerfCounter;
@@ -44,7 +43,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 
 	public DawdlerMainClassLoader(URL[] urls, ClassLoader parent) throws Exception {
 		super(urls, parent);
-		this.ucp = new URLClassPath(urls, null, null);
+		this.ucp = new URLClassPath(urls, null);
 		this.parent = parent;
 		loadAspectj();
 	}
@@ -56,7 +55,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 			return clazz;
 		}
 		String path = name.replace('.', '/').concat(".class");
-		Resource res = ucp.getResource(path, false);
+		Resource res = ucp.getResource(path);
 		if (res != null) {
 			try {
 				long t0 = System.nanoTime();
@@ -117,7 +116,7 @@ public class DawdlerMainClassLoader extends URLClassLoader implements DeployClas
 		}
 		if (res == null) {
 			String path = name.replace('.', '/').concat(".class");
-			res = ucp.getResource(path, false);
+			res = ucp.getResource(path);
 		}
 		if (res != null) {
 			try {

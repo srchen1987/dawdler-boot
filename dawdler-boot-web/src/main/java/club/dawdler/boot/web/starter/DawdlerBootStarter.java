@@ -16,6 +16,9 @@
  */
 package club.dawdler.boot.web.starter;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 import club.dawdler.boot.core.loader.DawdlerDeployClassLoader;
 import club.dawdler.boot.core.loader.DawdlerProjectClassLoader;
 import club.dawdler.boot.web.server.WebServer;
@@ -23,9 +26,6 @@ import club.dawdler.boot.web.server.WebServerProvider;
 import club.dawdler.fatjar.loader.launcher.LaunchedURLClassLoader;
 import club.dawdler.util.DawdlerTool;
 import club.dawdler.util.JVMTimeProvider;
-
-import java.lang.reflect.Field;
-import java.util.List;
 
 /**
  * @author jackson.song
@@ -53,19 +53,30 @@ public class DawdlerBootStarter {
 		if (webServers.isEmpty()) {
 			throw new java.lang.IllegalAccessException("can't found any web runtime container!");
 		}
+		if (webServers.size() > 1) {
+			throw new java.lang.IllegalAccessException("found more than one web runtime container! "+webServers.stream().map(t -> t.getClass().getName()).reduce((a, b) -> a + "," + b).orElse(""));
+		}
 		WebServer webServer = webServers.get(0);
-
+		System.out.println("Server base information:"+webServer.getClass().getName());
 		int port = 0;
+		int sslPort = 0;
 		String portString = null;
+		String sslPortString = null;
 		if (args != null && args.length > 0) {
 			for (String arg : args) {
 				if (arg.startsWith("--server.port=")) {
 					portString = arg.split("=")[1];
 				}
+				if (arg.startsWith("--server.ssl.port=")) {
+					sslPortString = arg.split("=")[1];
+				}
 			}
 		}
 		if (portString == null) {
 			portString = System.getProperty("server.port");
+		}
+		if (sslPortString == null) {
+			sslPortString = System.getProperty("server.ssl.port");
 		}
 		if (portString != null) {
 			if (!portString.matches("\\d+")) {
@@ -76,8 +87,20 @@ public class DawdlerBootStarter {
 				throw new IllegalArgumentException("server.port must be between 1 and 65535!");
 		}
 
+		if (sslPortString != null) {
+			if (!sslPortString.matches("\\d+")) {
+				throw new IllegalArgumentException("server.ssl.port must be a positive integer!");
+			}
+			sslPort = Integer.parseInt(sslPortString);
+			if (sslPort < 1 || sslPort > 65535)
+				throw new IllegalArgumentException("server.ssl.port must be between 1 and 65535!");
+		}
+
 		if (port > 0) {
 			webServer.setPort(port);
+		}
+		if (sslPort > 0) {
+			webServer.setSslPort(sslPort);
 		}
 		webServer.start();
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -91,6 +114,8 @@ public class DawdlerBootStarter {
 			}
 		});
 		long end = JVMTimeProvider.currentTimeMillis();
-		System.out.println("Server startup in " + (end - start) + " ms,Listening port: " + webServer.getPort() + "!");
+		System.out.println("Server startup in " + (end - start) + " ms!");
+		webServer.await();
 	}
+
 }

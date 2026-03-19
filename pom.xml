@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>club.dawdler</groupId>
 		<artifactId>dawdler</artifactId>
-		<version>0.1.3-jdk21-RELEASES</version>
+		<version>0.1.5-jdk25-RELEASES</version>
 	</parent>
 	<artifactId>dawdler-boot</artifactId>
 	<name>dawdler-boot</name>
@@ -39,18 +37,18 @@
 
 	<packaging>pom</packaging>
 	<properties>
-		<maven.compiler.target>21</maven.compiler.target>
-		<maven.compiler.source>21</maven.compiler.source>
-		<undertow.version>2.3.20.Final</undertow.version>
-		<undertow-jastow.version>2.2.8.Final</undertow-jastow.version>
-		<jakarta.servlet.jsp.version>3.1.1</jakarta.servlet.jsp.version>
-		<org.eclipse.jdt.ect.version>3.32.0</org.eclipse.jdt.ect.version>
-		<org.glassfish.expressly.version>5.0.0</org.glassfish.expressly.version>
+		<maven.compiler.target>25</maven.compiler.target>
+		<maven.compiler.source>25</maven.compiler.source>
+		<undertow.version>2.3.23.Final</undertow.version>
+		<undertow-jastow.version>2.2.9.Final</undertow-jastow.version>
+		<aQute.version>7.2.0</aQute.version>
+		<org.eclipse.jdt.ect.version>3.44.0</org.eclipse.jdt.ect.version>
+		<org.apache.ant.version>1.10.15</org.apache.ant.version>
 		<org.apache.maven.version>3.9.6</org.apache.maven.version>
 		<org.apache.maven.maven-project.version>2.2.1</org.apache.maven.maven-project.version>
-		<maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-		<maven-plugin-annotations.version>3.10.2</maven-plugin-annotations.version>
-		<maven-plugin-plugin.version>3.10.2</maven-plugin-plugin.version>
+		<maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
+		<maven-plugin-annotations.version>3.14.0</maven-plugin-annotations.version>
+		<maven-plugin-plugin.version>3.15.0</maven-plugin-plugin.version>
 	</properties>
 	<modules>
 		<module>dawdler-boot-server-dependencies</module>
@@ -61,7 +59,14 @@
 		<module>dawdler-boot-web-undertow</module>
 		<module>dawdler-boot-web-dependencies</module>
 		<module>dawdler-boot-web-undertow-jsp</module>
+		<module>dawdler-boot-web-tomcat</module>
+		<module>dawdler-boot-web-tomcat-source</module>
+		<module>dawdler-boot-web-tomcat-jsp</module>
+		<module>dawdler-boot-web-tomcat-jsp-source</module>
 		<module>dawdler-boot-classloader-core</module>
+		<module>dawdler-boot-web-tomcat-websocket-source</module>
+		<module>dawdler-boot-web-tomcat-websocket</module>
+		<module>dawdler-boot-web-undertow-websocket</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -92,12 +97,52 @@
 			</dependency>
 			<dependency>
 				<groupId>club.dawdler</groupId>
+				<artifactId>dawdler-boot-web-undertow-websocket</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>club.dawdler</groupId>
 				<artifactId>dawdler-boot-web-undertow-jsp</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>club.dawdler</groupId>
+				<artifactId>dawdler-boot-web-tomcat</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>club.dawdler</groupId>
+				<artifactId>dawdler-boot-web-tomcat-source</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>club.dawdler</groupId>
+				<artifactId>dawdler-boot-web-tomcat-jsp</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>club.dawdler</groupId>
+				<artifactId>dawdler-boot-web-tomcat-jsp-source</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>club.dawdler</groupId>
+				<artifactId>dawdler-boot-web-tomcat-websocket</artifactId>
+				<version>${dawdler.build.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>club.dawdler</groupId>
+				<artifactId>dawdler-boot-web-tomcat-websocket-source</artifactId>
 				<version>${dawdler.build.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>io.undertow</groupId>
 				<artifactId>undertow-core</artifactId>
+				<version>${undertow.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.undertow</groupId>
+				<artifactId>undertow-servlet</artifactId>
 				<version>${undertow.version}</version>
 			</dependency>
 			<dependency>
@@ -111,19 +156,9 @@
 				<version>${undertow-jastow.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>jakarta.servlet.jsp</groupId>
-				<artifactId>jakarta.servlet.jsp-api</artifactId>
-				<version>${jakarta.servlet.jsp.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jdt</groupId>
-				<artifactId>ecj</artifactId>
-				<version>${org.eclipse.jdt.ect.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.glassfish.expressly</groupId>
-				<artifactId>expressly</artifactId>
-				<version>${org.glassfish.expressly.version}</version>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>biz.aQute.bndlib</artifactId>
+				<version>${aQute.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -181,6 +216,22 @@
 						</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<configuration>
+					<attach>true</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<defaultGoal>compile</defaultGoal>
