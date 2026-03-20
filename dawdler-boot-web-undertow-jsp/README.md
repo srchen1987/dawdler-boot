@@ -21,7 +21,7 @@ pom.xml中加入
 
 undertow.yml 目前支持的容器undertow. (未来支持tomcat,jetty 则为tomcat.yml、jetty.yml)
 
-在undertow.yml中需要配置static-location.具体参考 [配置信息](../dawdler-boot-web/README.md#1-配置信息). jsp文件放在此目录下.
+在undertow.yml中需要配置static-location.具体参考 [配置信息](../dawdler-boot-web/README.md#1-通用配置信息). jsp文件放在此目录下.
 
 ### 3. JSTL支持
 

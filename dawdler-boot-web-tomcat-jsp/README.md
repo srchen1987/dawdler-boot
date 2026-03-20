@@ -19,7 +19,7 @@ pom.xml中加入
 
 ### 2. 配置信息
 
-在tomcat.yml中需要配置static-location.具体参考 [配置信息](../dawdler-boot-web/README.md#1-配置信息).jsp文件放在此目录下.
+在tomcat.yml中需要配置static-location.具体参考 [通用配置信息](../dawdler-boot-web/README.md#1-通用配置信息).jsp文件放在此目录下.
 
 ### 3. JSTL支持
 
