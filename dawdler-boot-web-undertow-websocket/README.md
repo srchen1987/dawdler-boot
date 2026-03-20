@@ -19,7 +19,7 @@ pom.xml中加入
 
 ### 2. 使用示例
 
-创建WebSocketServer类,并将此类的包配置到[dawdler-boot-web中component-package-paths的配置](../dawdler-boot-web/README.md#1-配置信息) component-package-paths中.
+创建WebSocketServer类,并将此类的包配置到[dawdler-boot-web中component-package-paths的配置](../dawdler-boot-web/README.md#1-通用配置信息) component-package-paths中.
 
 ```java
 
